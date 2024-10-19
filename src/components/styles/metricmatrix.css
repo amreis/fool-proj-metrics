@@ -1,0 +1,27 @@
+.metric-matrix-header {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  font: 12px sans-serif;
+}
+
+.metric-matrix-header > rect.bg {
+  fill: white;
+  fill-opacity: 0.9;
+  height: 100%;
+}
+
+g.per-dataset > text {
+  font-size: large;
+  font-weight: bold;
+  text-anchor: start;
+}
+
+aside {
+  float: right;
+  width: 20%;
+}
+
+aside * {
+  font: 15px monospace;
+}

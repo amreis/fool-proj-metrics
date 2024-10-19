@@ -25,3 +25,10 @@ aside {
 aside * {
   font: 15px monospace;
 }
+
+rect.metric-callout {
+  stroke: #000;
+  stroke-width: 5;
+  fill: transparent;
+  pointer-events: none;
+}

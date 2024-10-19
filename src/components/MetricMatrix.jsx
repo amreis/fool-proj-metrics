@@ -101,6 +101,7 @@ function processDiffToOriginalProj(arr) {
     );
     return diffs;
 }
+const headerHeight = 2.5 * cellSize;
 
 const MetricMatrix = () => {
     const headerRef = useRef();
@@ -125,7 +126,6 @@ const MetricMatrix = () => {
                 (d) => d.projection
             );
 
-            const headerHeight = 2.5 * cellSize;
             const headerSvg = d3.select(headerRef.current);
             headerSvg.selectChildren("*").remove();
             headerSvg
@@ -156,7 +156,6 @@ const MetricMatrix = () => {
                 .attr("height", height * 30)
                 .attr("viewBox", [0, 0, width, height * 30])
                 .attr("style", "font: 12px sans-serif;");
-            // .attr("style", "max-width: 100%; height: auto; font: 12px sans-serif;");
 
             const perDataset = svg
                 .selectChildren("g")
@@ -229,15 +228,11 @@ const MetricMatrix = () => {
 
             perMetric
                 .append("rect")
+                .classed("metric-callout", true)
                 .attr("height", 4 * cellSize)
                 .attr("x", ([key]) => cellSize * METRIC_NAMES.indexOf(key) + 100.5)
                 .attr("y", 15)
-                .attr("width", cellSize)
-                .attr("stroke", "#000")
-                .attr("stroke-width", 5)
-                .attr("fill", "#FFF0")
-                .append("title")
-                .text(([key]) => key);
+                .attr("width", cellSize);
         });
     }, [kParam]);
     return (

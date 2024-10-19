@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/fool-proj-metrics/static/css/main.3416d397.css",
+    "main.js": "/fool-proj-metrics/static/js/main.b48a0bc8.js",
+    "static/js/453.ae9b86fb.chunk.js": "/fool-proj-metrics/static/js/453.ae9b86fb.chunk.js",
+    "static/media/per_epoch_for_d3.csv": "/fool-proj-metrics/static/media/per_epoch_for_d3.55d7c106375f044f97b8.csv",
+    "index.html": "/fool-proj-metrics/index.html",
+    "main.3416d397.css.map": "/fool-proj-metrics/static/css/main.3416d397.css.map",
+    "main.b48a0bc8.js.map": "/fool-proj-metrics/static/js/main.b48a0bc8.js.map",
+    "453.ae9b86fb.chunk.js.map": "/fool-proj-metrics/static/js/453.ae9b86fb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3416d397.css",
+    "static/js/main.b48a0bc8.js"
+  ]
+}

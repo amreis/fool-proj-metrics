@@ -20,7 +20,7 @@ function lowerIsBetterScale(interpolator = DEFAULT_INTERPOLATOR) {
 function higherIsBetterScale(interpolator = DEFAULT_INTERPOLATOR) {
     return (x) => d3.scaleDiverging([-1, 0, 1], interpolator)(clip(x, -3, 3));
 }
-const width = 1600;
+const width = 1150;
 const cellSize = 56;
 const height = cellSize * 4;
 
@@ -259,9 +259,7 @@ const MetricMatrix = () => {
             <div
                 style={{
                     height: "100vh",
-                    width: "fill",
                     overflowY: "scroll",
-                    overflowX: "clip",
                 }}
                 id="matrix-container"
             >

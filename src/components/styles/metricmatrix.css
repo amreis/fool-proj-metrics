@@ -1,3 +1,9 @@
+div#main-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .metric-matrix-header {
   position: sticky;
   top: 0px;
@@ -17,9 +23,23 @@ g.per-dataset > text {
   text-anchor: start;
 }
 
+div#matrix-container {
+  width: 80%;
+  order: 1;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
 aside {
-  float: right;
   width: 20%;
+  order: 2;
+  height: fit-content;
+  position: sticky;
+  top: 0px;
+  * {
+    position: sticky;
+    top: 0px;
+  }
 }
 
 aside * {
@@ -31,4 +51,29 @@ rect.metric-callout {
   stroke-width: 5;
   fill: transparent;
   pointer-events: none;
+}
+
+.metric-ref-val,
+.metric-delta-val {
+  pointer-events: none;
+}
+
+@media only screen and (max-width: 600px) {
+  div#main-container {
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  aside {
+    order: 1;
+    width: 100%;
+    flex: 0 1 0%;
+    top: 0px;
+  }
+
+  div#matrix-container {
+    order: 2;
+    width: 100%;
+    flex: 1 1 50%;
+  }
 }

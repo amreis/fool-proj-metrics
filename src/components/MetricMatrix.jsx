@@ -207,6 +207,7 @@ const MetricMatrix = () => {
 
             perProj2
                 .insert("text", "#first + *")
+                .classed("metric-delta-val", true)
                 .attr("x", (_d, i) => 10 + i * (1.0 * cellSize))
                 .attr("y", 35)
                 .attr("fill", "#000")
@@ -214,6 +215,7 @@ const MetricMatrix = () => {
                 .text((d, _i) => (d[1] >= 0 ? "+" : "-") + Math.abs(d[1] + 0.0001).toFixed(3));
             perProj2
                 .insert("text", "#first + *")
+                .classed("metric-ref-val", true)
                 .data((d) => Object.entries(d[1][1]).filter((d) => METRIC_NAMES.includes(d[0])))
                 .attr("x", (_d, i) => 10 + i * (1.0 * cellSize))
                 .attr("y", 50)
@@ -236,7 +238,7 @@ const MetricMatrix = () => {
         });
     }, [kParam]);
     return (
-        <>
+        <div id="main-container">
             <aside>
                 <label htmlFor="k-param-select">K = </label>
                 <select
@@ -251,17 +253,11 @@ const MetricMatrix = () => {
                     ))}
                 </select>
             </aside>
-            <div
-                style={{
-                    height: "100vh",
-                    overflowY: "scroll",
-                }}
-                id="matrix-container"
-            >
+            <div id="matrix-container">
                 <svg id="header-svg" ref={headerRef} />
                 <svg id="content-svg" ref={contentRef} />
             </div>
-        </>
+        </div>
     );
 };
 

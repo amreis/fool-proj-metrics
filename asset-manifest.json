@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/fool-proj-metrics/static/css/main.09e30eea.css",
-    "main.js": "/fool-proj-metrics/static/js/main.05ab34de.js",
+    "main.css": "/fool-proj-metrics/static/css/main.d4cdecbf.css",
+    "main.js": "/fool-proj-metrics/static/js/main.111645e7.js",
     "static/js/453.ae9b86fb.chunk.js": "/fool-proj-metrics/static/js/453.ae9b86fb.chunk.js",
     "static/media/per_epoch_for_d3.csv": "/fool-proj-metrics/static/media/per_epoch_for_d3.55d7c106375f044f97b8.csv",
     "index.html": "/fool-proj-metrics/index.html",
-    "main.09e30eea.css.map": "/fool-proj-metrics/static/css/main.09e30eea.css.map",
-    "main.05ab34de.js.map": "/fool-proj-metrics/static/js/main.05ab34de.js.map",
+    "main.d4cdecbf.css.map": "/fool-proj-metrics/static/css/main.d4cdecbf.css.map",
+    "main.111645e7.js.map": "/fool-proj-metrics/static/js/main.111645e7.js.map",
     "453.ae9b86fb.chunk.js.map": "/fool-proj-metrics/static/js/453.ae9b86fb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.09e30eea.css",
-    "static/js/main.05ab34de.js"
+    "static/css/main.d4cdecbf.css",
+    "static/js/main.111645e7.js"
   ]
 }

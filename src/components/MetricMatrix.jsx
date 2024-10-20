@@ -10,6 +10,7 @@ const DEFAULT_INTERPOLATOR = d3.piecewise(
  * @param {number} x
  * @param {number} min
  * @param {number} max
+ * @returns {number}
  */
 function clip(x, min, max) {
     return x <= min ? min : x >= max ? max : x;
@@ -91,8 +92,8 @@ const PER_METRIC_SCALES = {
     scale_normalized_stress: lowerIsBetterScale(),
 };
 function processDiffToOriginalProj(arr) {
-    const learnedMetrics = arr.filter((d) => d.epoch === 1000)[0];
-    const origMetrics = arr.filter((d) => d.epoch === -1)[0];
+    const learnedMetrics = arr.find((d) => d.epoch === 1000);
+    const origMetrics = arr.find((d) => d.epoch === -1);
 
     const diffs = Object.fromEntries(
         Object.keys(learnedMetrics)
@@ -216,7 +217,11 @@ const MetricMatrix = () => {
             perProj2
                 .insert("text", "#first + *")
                 .classed("metric-ref-val", true)
-                .data((d) => Object.entries(d[1][1]).filter((d) => METRIC_NAMES.includes(d[0])))
+                .data(([, data]) =>
+                    Object.entries(data.find((row) => row.epoch === -1)).filter(([metricName]) =>
+                        METRIC_NAMES.includes(metricName)
+                    )
+                )
                 .attr("x", (_d, i) => 10 + i * (1.0 * cellSize))
                 .attr("y", 50)
                 .attr("fill", "#000")

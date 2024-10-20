@@ -4,6 +4,26 @@ div#main-container {
   flex-wrap: wrap;
 }
 
+div#matrix-container {
+  width: 80%;
+  order: 1;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+aside {
+  width: 20%;
+  order: 2;
+  height: fit-content;
+  position: sticky;
+  top: 0px;
+  * {
+    font: 15px monospace;
+    position: sticky;
+    top: 0px;
+  }
+}
+
 .metric-matrix-header {
   position: sticky;
   top: 0px;
@@ -21,29 +41,6 @@ g.per-dataset > text {
   font-size: large;
   font-weight: bold;
   text-anchor: start;
-}
-
-div#matrix-container {
-  width: 80%;
-  order: 1;
-  height: 100vh;
-  overflow-y: scroll;
-}
-
-aside {
-  width: 20%;
-  order: 2;
-  height: fit-content;
-  position: sticky;
-  top: 0px;
-  * {
-    position: sticky;
-    top: 0px;
-  }
-}
-
-aside * {
-  font: 15px monospace;
 }
 
 rect.metric-callout {

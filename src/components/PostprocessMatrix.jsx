@@ -65,6 +65,19 @@ const Controls = ({ updateMatrix, params }) => {
     const [datasetParam, setDatasetParam] = useState(datasetParamInit);
 
     useEffect(() => {
+        const {
+            k: kParamInit,
+            metric: metricParamInit,
+            dataset: datasetParamInit,
+            projection: projectionParamInit,
+        } = params;
+        setKParam(kParamInit);
+        setMetricParam(metricParamInit);
+        setProjectionParam(projectionParamInit);
+        setDatasetParam(datasetParamInit);
+    }, [params]);
+
+    useEffect(() => {
         updateMatrix({
             k: kParam,
             metric: metricParam,
@@ -91,7 +104,7 @@ const Controls = ({ updateMatrix, params }) => {
                     <select
                         id="postprocessk-param-select"
                         onChange={(e) => setKParam(parseInt(e.target.value))}
-                        value={kParamInit}
+                        value={kParam}
                     >
                         {K_VALS.map((v) => (
                             <option key={v} value={v}>
@@ -107,7 +120,7 @@ const Controls = ({ updateMatrix, params }) => {
                     <select
                         id="metric-param-select"
                         onChange={(e) => setMetricParam(e.target.value)}
-                        value={metricParamInit}
+                        value={metricParam}
                     >
                         {TARGET_METRICS.map((v) => (
                             <option key={v} value={v}>
@@ -123,7 +136,7 @@ const Controls = ({ updateMatrix, params }) => {
                     <select
                         id="projection-param-select"
                         onChange={(e) => setProjectionParam(e.target.value)}
-                        value={projectionParamInit}
+                        value={projectionParam}
                     >
                         {PROJECTIONS.map((v) => (
                             <option key={v} value={v}>
@@ -139,7 +152,7 @@ const Controls = ({ updateMatrix, params }) => {
                     <select
                         id="dataset-param-select"
                         onChange={(e) => setDatasetParam(e.target.value)}
-                        value={datasetParamInit}
+                        value={datasetParam}
                     >
                         {DATASETS.map((v) => (
                             <option key={v} value={v}>
@@ -283,14 +296,14 @@ const PostprocessMatrix = ({ caseToShow, setPostprocessCase }) => {
             <Controls updateMatrix={setPostprocessCase} params={caseToShow} />
             <svg
                 id="main"
-                height={"500"}
+                height={500}
                 viewBox={[0, 0, svgWidth, 500]}
                 style={{ width: "99vw" }}
                 ref={ref}
             >
                 <image
                     x={0}
-                    y={0}
+                    y={28}
                     width={"100%"}
                     href={require("../data/compressed/" +
                         `p${caseToShow.projection.toLowerCase()}` +
@@ -301,7 +314,7 @@ const PostprocessMatrix = ({ caseToShow, setPostprocessCase }) => {
                     // style={{
                     //     width: "100vw",
                     // }}
-                    height={500}
+                    // height={300}
                     alt="Original projection next to generated projections."
                 />
             </svg>

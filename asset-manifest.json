@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/fool-proj-metrics/static/css/main.5eb16436.css",
-    "main.js": "/fool-proj-metrics/static/js/main.3bf095ce.js",
+    "main.js": "/fool-proj-metrics/static/js/main.0127e78d.js",
     "static/js/453.3e60a3e9.chunk.js": "/fool-proj-metrics/static/js/453.3e60a3e9.chunk.js",
     "static/media/pmds_dmnist_mjaccard_k7.jpg": "/fool-proj-metrics/static/media/pmds_dmnist_mjaccard_k7.b48890e117810e80c1bb.jpg",
     "static/media/pmds_dmnist_mjaccard_k1.jpg": "/fool-proj-metrics/static/media/pmds_dmnist_mjaccard_k1.9bd92fd2774f5de99882.jpg",
@@ -267,6 +267,7 @@
     "static/media/pumap_dusps_mneighborhood_hit_k51.jpg": "/fool-proj-metrics/static/media/pumap_dusps_mneighborhood_hit_k51.8556cd093bdfc1cbf911.jpg",
     "static/media/pumap_dusps_mtrustworthiness_k7.jpg": "/fool-proj-metrics/static/media/pumap_dusps_mtrustworthiness_k7.3ba6686e57844d1c45de.jpg",
     "static/media/ptsne_dreuters_mneighborhood_hit_k21.jpg": "/fool-proj-metrics/static/media/ptsne_dreuters_mneighborhood_hit_k21.317d8f6194d86f4116e7.jpg",
+    "static/media/postprocess_for_d3.csv": "/fool-proj-metrics/static/media/postprocess_for_d3.834e86121ee3a2918a64.csv",
     "static/media/ptsne_dhar_mjaccard_k51.jpg": "/fool-proj-metrics/static/media/ptsne_dhar_mjaccard_k51.5dded22564de507be5f7.jpg",
     "static/media/pmds_dspambase_mtrustworthiness_k7.jpg": "/fool-proj-metrics/static/media/pmds_dspambase_mtrustworthiness_k7.c1a96323ea452cce5130.jpg",
     "static/media/pisomap_dspambase_mneighborhood_hit_k7.jpg": "/fool-proj-metrics/static/media/pisomap_dspambase_mneighborhood_hit_k7.3757183acb9c077f39fe.jpg",
@@ -390,11 +391,11 @@
     "static/media/pumap_dreuters_mtrustworthiness_k21.jpg": "/fool-proj-metrics/static/media/pumap_dreuters_mtrustworthiness_k21.b8471e91518e99745551.jpg",
     "index.html": "/fool-proj-metrics/index.html",
     "main.5eb16436.css.map": "/fool-proj-metrics/static/css/main.5eb16436.css.map",
-    "main.3bf095ce.js.map": "/fool-proj-metrics/static/js/main.3bf095ce.js.map",
+    "main.0127e78d.js.map": "/fool-proj-metrics/static/js/main.0127e78d.js.map",
     "453.3e60a3e9.chunk.js.map": "/fool-proj-metrics/static/js/453.3e60a3e9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5eb16436.css",
-    "static/js/main.3bf095ce.js"
+    "static/js/main.0127e78d.js"
   ]
 }

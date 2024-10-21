@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { saveSvgAsPng } from "save-svg-as-png";
 import { useEffect, useRef, useState } from "react";
 import "./styles/metricmatrix.css";
 import csvData from "../data/per_epoch_for_d3.csv";
@@ -24,6 +25,39 @@ function higherIsBetterScale(interpolator = DEFAULT_INTERPOLATOR) {
 const width = 1150;
 const cellSize = 56;
 const height = cellSize * 4;
+
+/**
+ * @param {SVGRectElement} rect
+ */
+function findParamsOfClickedRect(rect) {
+    const k = parseInt(document.getElementById("k-param-select").value);
+
+    let projName = undefined;
+    let datasetName = undefined;
+    let metricName = undefined;
+    let elem = rect;
+
+    const extractChildTextValue = (node) =>
+        node.childNodes.entries().find(([_i, n]) => n.tagName === "text")[1].innerHTML;
+
+    while (elem.parentNode) {
+        let parent = elem.parentNode;
+        if (!parent.classList) {
+            elem = elem.parentNode;
+            continue;
+        }
+        if (parent.classList.contains("per-dataset")) {
+            datasetName = extractChildTextValue(parent).toLowerCase().replace("-", "");
+        } else if (parent.classList.contains("per-metric")) {
+            metricName = extractChildTextValue(parent).toLowerCase().replace("-", "");
+        } else if (parent.classList.contains("per-projection")) {
+            projName = extractChildTextValue(parent).toLowerCase().replace("-", "");
+        }
+        elem = elem.parentNode;
+    }
+
+    return { k, dataset: datasetName, metric: metricName, projection: projName };
+}
 
 const METRIC_NAMES = [
     "average_local_error",
@@ -104,7 +138,7 @@ function processDiffToOriginalProj(arr) {
 }
 const headerHeight = 2.5 * cellSize;
 
-const MetricMatrix = () => {
+const MetricMatrix = ({ setPostprocessCase }) => {
     const headerRef = useRef();
     const contentRef = useRef();
     const [kParam, setKParam] = useState(1);
@@ -139,7 +173,7 @@ const MetricMatrix = () => {
                 .append("rect")
                 .classed("bg", true)
                 .attr("width", width - 121.0)
-                .attr("transform", "translate(121.0, 0.0)");
+                .attr("transform", "translate(151.0, 0.0)");
             headerSvg
                 .selectAll("text")
                 .data(METRIC_NAMES)
@@ -148,7 +182,7 @@ const MetricMatrix = () => {
                 .attr(
                     "transform",
                     (_d, i) =>
-                        `translate(${121.0 + (i + 0.5) * cellSize}, ${headerHeight}) rotate(-45)`
+                        `translate(${151.0 + (i + 0.5) * cellSize}, ${headerHeight}) rotate(-45)`
                 );
 
             const svg = d3.select(contentRef.current);
@@ -165,11 +199,11 @@ const MetricMatrix = () => {
                 .classed("per-dataset", true)
                 .attr(
                     "transform",
-                    (_d, i) => `translate(20.5, ${4 * height * 1.2 * i + cellSize})`
+                    (_d, i) => `translate(50.5, ${4 * height * 1.2 * i + cellSize})`
                 );
             perDataset
                 .append("text")
-                .attr("x", -5)
+                .attr("x", -50)
                 .attr("y", -5)
                 .text(([key]) => key.toUpperCase());
 
@@ -202,7 +236,22 @@ const MetricMatrix = () => {
                 .attr("height", cellSize - 1)
                 .attr("x", (_d, i) => i * (1.0 * cellSize))
                 .attr("y", 15)
+                .classed("metric-val-rect", true)
                 .attr("fill", ([metricName, val]) => PER_METRIC_SCALES[metricName](val))
+                .on("dblclick", function (e, d) {
+                    const previousActiveRects = document.querySelector("rect.active");
+                    if (previousActiveRects){
+                        previousActiveRects.classList.toggle('active')
+                    }
+                })
+                .on("click", function (e, d) {
+                    const previousActiveRects = document.querySelector("rect.active");
+                    if (previousActiveRects){
+                        previousActiveRects.classList.toggle('active')
+                    }
+                    this.classList.toggle('active');
+                    setPostprocessCase(findParamsOfClickedRect(this));
+                })
                 .append("title")
                 .text((d, _i) => d[0]);
 
@@ -241,22 +290,39 @@ const MetricMatrix = () => {
                 .attr("y", 15)
                 .attr("width", cellSize);
         });
-    }, [kParam]);
+    }, [kParam, setPostprocessCase]);
     return (
         <div id="main-container">
-            <aside>
-                <label htmlFor="k-param-select">K = </label>
-                <select
-                    id="k-param-select"
-                    value={kParam}
-                    onChange={(e) => setKParam(parseInt(e.target.value))}
-                >
-                    {[1, 7, 21, 51].map((v) => (
-                        <option key={v} value={v}>
-                            {v}
-                        </option>
-                    ))}
-                </select>
+            <aside
+                style={{
+                    display: "grid",
+                }}
+            >
+                <div>
+                    <button
+                        onClick={(e) => {
+                            saveSvgAsPng(d3.select("#content-svg").node(), "out.png", {
+                                backgroundColor: "#FFFFFF",
+                            });
+                        }}
+                    >
+                        Save as SVG
+                    </button>
+                </div>
+                <div>
+                    <label htmlFor="k-param-select">K = </label>
+                    <select
+                        id="k-param-select"
+                        value={kParam}
+                        onChange={(e) => setKParam(parseInt(e.target.value))}
+                    >
+                        {[1, 7, 21, 51].map((v) => (
+                            <option key={v} value={v}>
+                                {v}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </aside>
             <div id="matrix-container">
                 <svg id="header-svg" ref={headerRef} />

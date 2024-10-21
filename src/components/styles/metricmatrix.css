@@ -74,3 +74,8 @@ rect.metric-callout {
     flex: 1 1 50%;
   }
 }
+
+rect.active {
+  stroke: red;
+  stroke-width: 3px;
+}

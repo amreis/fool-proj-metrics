@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/fool-proj-metrics/static/css/main.5eb16436.css",
-    "main.js": "/fool-proj-metrics/static/js/main.f967727f.js",
+    "main.css": "/fool-proj-metrics/static/css/main.f55ee3e2.css",
+    "main.js": "/fool-proj-metrics/static/js/main.62342b02.js",
     "static/js/453.3e60a3e9.chunk.js": "/fool-proj-metrics/static/js/453.3e60a3e9.chunk.js",
     "static/media/pmds_dmnist_mjaccard_k7.jpg": "/fool-proj-metrics/static/media/pmds_dmnist_mjaccard_k7.b48890e117810e80c1bb.jpg",
     "static/media/pmds_dmnist_mjaccard_k1.jpg": "/fool-proj-metrics/static/media/pmds_dmnist_mjaccard_k1.9bd92fd2774f5de99882.jpg",
@@ -390,12 +390,12 @@
     "static/media/pumap_dreuters_mtrustworthiness_k1.jpg": "/fool-proj-metrics/static/media/pumap_dreuters_mtrustworthiness_k1.0f1307401bd13d767154.jpg",
     "static/media/pumap_dreuters_mtrustworthiness_k21.jpg": "/fool-proj-metrics/static/media/pumap_dreuters_mtrustworthiness_k21.b8471e91518e99745551.jpg",
     "index.html": "/fool-proj-metrics/index.html",
-    "main.5eb16436.css.map": "/fool-proj-metrics/static/css/main.5eb16436.css.map",
-    "main.f967727f.js.map": "/fool-proj-metrics/static/js/main.f967727f.js.map",
+    "main.f55ee3e2.css.map": "/fool-proj-metrics/static/css/main.f55ee3e2.css.map",
+    "main.62342b02.js.map": "/fool-proj-metrics/static/js/main.62342b02.js.map",
     "453.3e60a3e9.chunk.js.map": "/fool-proj-metrics/static/js/453.3e60a3e9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5eb16436.css",
-    "static/js/main.f967727f.js"
+    "static/css/main.f55ee3e2.css",
+    "static/js/main.62342b02.js"
   ]
 }

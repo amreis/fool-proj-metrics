@@ -7,7 +7,7 @@ div#main-container {
 div#matrix-container {
   width: 80%;
   order: 1;
-  height: 100vh;
+  height: 90vh;
   overflow-y: scroll;
 }
 
@@ -15,12 +15,11 @@ aside {
   width: 20%;
   order: 2;
   height: fit-content;
-  position: sticky;
+  /* position: sticky; */
   top: 0px;
   * {
     font: 15px monospace;
-    position: sticky;
-    top: 0px;
+
   }
 }
 
@@ -58,14 +57,14 @@ rect.metric-callout {
 @media only screen and (max-width: 600px) {
   div#main-container {
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
   }
 
   aside {
     order: 1;
     width: 100%;
     flex: 0 1 0%;
-    top: 0px;
+    /* top: 0px; */
   }
 
   div#matrix-container {

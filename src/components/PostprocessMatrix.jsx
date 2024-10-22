@@ -6,50 +6,13 @@ import csvFooler from "../data/per_epoch_for_d3.csv";
 
 import * as d3 from "d3";
 
+import { PER_METRIC_SCALES } from "../common/scale";
+
 const K_VALS = [1, 7, 21, 51];
 const TARGET_METRICS = ["trustworthiness", "continuity", "jaccard", "neighborhood_hit"].sort();
 const PROJECTIONS = ["tsne", "umap", "mds", "isomap"].sort();
 const DATASETS = ["mnist", "fashionmnist", "spambase", "har", "reuters", "usps"].sort();
 const POSTPROCESS_IDS = ["projnn", "truenn", "delaunay"];
-const DEFAULT_INTERPOLATOR = d3.piecewise(
-    d3.schemeRdBu[5].slice(Math.floor(5 / 2) - 1, Math.floor(5 / 2) + 2)
-);
-
-/**
- * @param {number} x
- * @param {number} min
- * @param {number} max
- * @returns {number}
- */
-function clip(x, min, max) {
-    return x <= min ? min : x >= max ? max : x;
-}
-function lowerIsBetterScale(interpolator = DEFAULT_INTERPOLATOR) {
-    return (x) => d3.scaleDiverging([1, 0, -1], interpolator)(clip(x, -3, 3));
-}
-function higherIsBetterScale(interpolator = DEFAULT_INTERPOLATOR) {
-    return (x) => d3.scaleDiverging([-1, 0, 1], interpolator)(clip(x, -3, 3));
-}
-const PER_METRIC_SCALES = {
-    class_aware_continuity: higherIsBetterScale(),
-    class_aware_trustworthiness: higherIsBetterScale(),
-    continuity: higherIsBetterScale(),
-    distance_consistency: higherIsBetterScale(),
-    jaccard: higherIsBetterScale(),
-    neighborhood_hit: higherIsBetterScale(),
-    pearson_correlation: higherIsBetterScale(),
-    shepard_goodness: higherIsBetterScale(),
-    true_neighbors: higherIsBetterScale(),
-    trustworthiness: higherIsBetterScale(),
-    average_local_error: lowerIsBetterScale(),
-    false_neighbors: lowerIsBetterScale(),
-    missing_neighbors: lowerIsBetterScale(),
-    mrre_data: lowerIsBetterScale(),
-    mrre_proj: lowerIsBetterScale(),
-    normalized_stress: lowerIsBetterScale(),
-    procrustes: lowerIsBetterScale(),
-    scale_normalized_stress: lowerIsBetterScale(),
-};
 
 const Controls = ({ updateMatrix, params }) => {
     const {
@@ -93,7 +56,7 @@ const Controls = ({ updateMatrix, params }) => {
                 style={{
                     display: "grid",
                     gridTemplateColumns: "2fr 1fr",
-                    gridAutoRows: "3vh",
+                    gridAutoRows: "fit-content(3vh)",
                     width: "20%",
                 }}
             >
@@ -292,33 +255,35 @@ const PostprocessMatrix = ({ caseToShow, setPostprocessCase }) => {
         });
     }, [postprocessData, foolerData, caseToShow]);
     return (
-        <>
+        <div id="postprocess-part">
+            <div id="postprocmatrix-container">
+                <svg
+                    id="postprocmatrix"
+                    // height={500}
+                    viewBox={[0, 0, svgWidth, 400]}
+                    // style={{ width: "99vw" }}
+                    ref={ref}
+                >
+                    <image
+                        x={0}
+                        y={28}
+                        width={"100%"}
+                        href={require("../data/compressed/" +
+                            `p${caseToShow.projection.toLowerCase()}` +
+                            `_d${caseToShow.dataset.toLowerCase()}` +
+                            `_m${caseToShow.metric.toLowerCase()}` +
+                            `_k${caseToShow.k}` +
+                            ".jpg")}
+                        // style={{
+                        //     width: "100vw",
+                        // }}
+                        // height={300}
+                        alt="Original projection next to generated projections."
+                    />
+                </svg>
+            </div>
             <Controls updateMatrix={setPostprocessCase} params={caseToShow} />
-            <svg
-                id="main"
-                height={500}
-                viewBox={[0, 0, svgWidth, 500]}
-                style={{ width: "99vw" }}
-                ref={ref}
-            >
-                <image
-                    x={0}
-                    y={28}
-                    width={"100%"}
-                    href={require("../data/compressed/" +
-                        `p${caseToShow.projection.toLowerCase()}` +
-                        `_d${caseToShow.dataset.toLowerCase()}` +
-                        `_m${caseToShow.metric.toLowerCase()}` +
-                        `_k${caseToShow.k}` +
-                        ".jpg")}
-                    // style={{
-                    //     width: "100vw",
-                    // }}
-                    // height={300}
-                    alt="Original projection next to generated projections."
-                />
-            </svg>
-        </>
+        </div>
     );
 };
 

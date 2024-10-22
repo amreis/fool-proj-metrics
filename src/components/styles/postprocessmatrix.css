@@ -1,3 +1,35 @@
+div#postprocess-part {
+  display: flex;
+  flex-direction: row;
+}
+div.paramsPanel {
+  margin-right: 1em;
+}
 div.paramsPanel > div {
   width: max-content;
+}
+
+div#postprocmatrix-container {
+  height: fit-content;
+  width: 100vw;
+}
+
+svg#postprocmatrix {
+  height: fit-content;
+  width: fit-content;
+}
+
+@media only screen and (max-width: 600px) {
+  div#postprocess-part {
+    flex-direction: column;
+  }
+  div#postprocmatrix-container {
+    width: 100vw;
+    overflow-x: scroll;
+    order: 2;
+  }
+  div#postprocmatrix-container > svg#postprocmatrix {
+    height: 20vh;
+    order: 1;
+  }
 }

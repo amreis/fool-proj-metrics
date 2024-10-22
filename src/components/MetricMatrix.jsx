@@ -3,25 +3,8 @@ import { saveSvgAsPng } from "save-svg-as-png";
 import { useEffect, useRef, useState } from "react";
 import "./styles/metricmatrix.css";
 import csvData from "../data/per_epoch_for_d3.csv";
-const DEFAULT_INTERPOLATOR = d3.piecewise(
-    d3.schemeRdBu[5].slice(Math.floor(5 / 2) - 1, Math.floor(5 / 2) + 2)
-);
+import { PER_METRIC_SCALES } from "../common/scale";
 
-/**
- * @param {number} x
- * @param {number} min
- * @param {number} max
- * @returns {number}
- */
-function clip(x, min, max) {
-    return x <= min ? min : x >= max ? max : x;
-}
-function lowerIsBetterScale(interpolator = DEFAULT_INTERPOLATOR) {
-    return (x) => d3.scaleDiverging([1, 0, -1], interpolator)(clip(x, -3, 3));
-}
-function higherIsBetterScale(interpolator = DEFAULT_INTERPOLATOR) {
-    return (x) => d3.scaleDiverging([-1, 0, 1], interpolator)(clip(x, -3, 3));
-}
 const width = 1150;
 const cellSize = 56;
 const height = cellSize * 4;
@@ -105,26 +88,9 @@ const NICE_PROJ_NAMES = {
     isomap: "Isomap",
     umap: "UMAP",
 };
-const PER_METRIC_SCALES = {
-    class_aware_continuity: higherIsBetterScale(),
-    class_aware_trustworthiness: higherIsBetterScale(),
-    continuity: higherIsBetterScale(),
-    distance_consistency: higherIsBetterScale(),
-    jaccard: higherIsBetterScale(),
-    neighborhood_hit: higherIsBetterScale(),
-    pearson_correlation: higherIsBetterScale(),
-    shepard_goodness: higherIsBetterScale(),
-    true_neighbors: higherIsBetterScale(),
-    trustworthiness: higherIsBetterScale(),
-    average_local_error: lowerIsBetterScale(),
-    false_neighbors: lowerIsBetterScale(),
-    missing_neighbors: lowerIsBetterScale(),
-    mrre_data: lowerIsBetterScale(),
-    mrre_proj: lowerIsBetterScale(),
-    normalized_stress: lowerIsBetterScale(),
-    procrustes: lowerIsBetterScale(),
-    scale_normalized_stress: lowerIsBetterScale(),
-};
+/**
+ * @param {Array<object>} arr
+ */
 function processDiffToOriginalProj(arr) {
     const learnedMetrics = arr.find((d) => d.epoch === 1000);
     const origMetrics = arr.find((d) => d.epoch === -1);
@@ -239,17 +205,11 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .classed("metric-val-rect", true)
                 .attr("fill", ([metricName, val]) => PER_METRIC_SCALES[metricName](val))
                 .on("dblclick", function (e, d) {
-                    const previousActiveRects = document.querySelector("rect.active");
-                    if (previousActiveRects){
-                        previousActiveRects.classList.toggle('active')
-                    }
+                    d3.selectAll("rect.active").classed("active", false);
                 })
                 .on("click", function (e, d) {
-                    const previousActiveRects = document.querySelector("rect.active");
-                    if (previousActiveRects){
-                        previousActiveRects.classList.toggle('active')
-                    }
-                    this.classList.toggle('active');
+                    d3.selectAll("rect.active").classed("active", false);
+                    d3.select(this).classed("active", true);
                     setPostprocessCase(findParamsOfClickedRect(this));
                 })
                 .append("title")
@@ -291,6 +251,7 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .attr("width", cellSize);
         });
     }, [kParam, setPostprocessCase]);
+
     return (
         <div id="main-container">
             <aside
@@ -306,7 +267,7 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                             });
                         }}
                     >
-                        Save as SVG
+                        Save as PNG
                     </button>
                 </div>
                 <div>

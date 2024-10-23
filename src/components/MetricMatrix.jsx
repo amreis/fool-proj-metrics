@@ -23,18 +23,19 @@ function findParamsOfClickedRect(rect) {
     const extractChildTextValue = (node) =>
         node.childNodes.entries().find(([_i, n]) => n.tagName === "text")[1].innerHTML;
 
+    const normalize = (text) => text.toLowerCase().replace("-", "");
     while (elem.parentNode) {
-        let parent = elem.parentNode;
+        const parent = elem.parentNode;
         if (!parent.classList) {
             elem = elem.parentNode;
             continue;
         }
         if (parent.classList.contains("per-dataset")) {
-            datasetName = extractChildTextValue(parent).toLowerCase().replace("-", "");
+            datasetName = normalize(extractChildTextValue(parent));
         } else if (parent.classList.contains("per-metric")) {
-            metricName = extractChildTextValue(parent).toLowerCase().replace("-", "");
+            metricName = normalize(extractChildTextValue(parent));
         } else if (parent.classList.contains("per-projection")) {
-            projName = extractChildTextValue(parent).toLowerCase().replace("-", "");
+            projName = normalize(extractChildTextValue(parent));
         }
         elem = elem.parentNode;
     }

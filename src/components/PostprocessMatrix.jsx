@@ -198,8 +198,6 @@ const PostprocessMatrix = ({ caseToShow, setPostprocessCase }) => {
                 caseToShow.dataset === d.dataset &&
                 caseToShow.metric === d.metric
         );
-        console.log(refTuple);
-        console.log(relevantTuples);
 
         const rootSvg = d3.select(ref.current);
         rootSvg.selectChildren("g").remove();

@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-
-import "./styles/postprocessmatrix.css";
-import csvPostprocess from "../data/postprocess_for_d3.csv";
-import csvFooler from "../data/per_epoch_for_d3.csv";
-
 import * as d3 from "d3";
-
+import { useEffect, useRef, useState } from "react";
 import { PER_METRIC_SCALES } from "../common/scale";
+import { NICE_METRIC_NAMES, NICE_PROJ_NAMES } from "../common/names";
+import csvFooler from "../data/per_epoch_for_d3.csv";
+import csvPostprocess from "../data/postprocess_for_d3.csv";
+import "./styles/postprocessmatrix.css";
 
 const K_VALS = [1, 7, 21, 51];
 const TARGET_METRICS = ["trustworthiness", "continuity", "jaccard", "neighborhood_hit"].sort();
@@ -87,7 +85,7 @@ const Controls = ({ updateMatrix, params }) => {
                     >
                         {TARGET_METRICS.map((v) => (
                             <option key={v} value={v}>
-                                {v}
+                                {NICE_METRIC_NAMES[v]}
                             </option>
                         ))}
                     </select>
@@ -103,7 +101,7 @@ const Controls = ({ updateMatrix, params }) => {
                     >
                         {PROJECTIONS.map((v) => (
                             <option key={v} value={v}>
-                                {v}
+                                {NICE_PROJ_NAMES[v]}
                             </option>
                         ))}
                     </select>
@@ -257,13 +255,7 @@ const PostprocessMatrix = ({ caseToShow, setPostprocessCase }) => {
     return (
         <div id="postprocess-part">
             <div id="postprocmatrix-container">
-                <svg
-                    id="postprocmatrix"
-                    // height={500}
-                    viewBox={[0, 0, svgWidth, 400]}
-                    // style={{ width: "99vw" }}
-                    ref={ref}
-                >
+                <svg id="postprocmatrix" viewBox={[0, 0, svgWidth, 400]} ref={ref}>
                     <image
                         x={0}
                         y={28}
@@ -274,10 +266,6 @@ const PostprocessMatrix = ({ caseToShow, setPostprocessCase }) => {
                             `_m${caseToShow.metric.toLowerCase()}` +
                             `_k${caseToShow.k}` +
                             ".jpg")}
-                        // style={{
-                        //     width: "100vw",
-                        // }}
-                        // height={300}
                         alt="Original projection next to generated projections."
                     />
                 </svg>

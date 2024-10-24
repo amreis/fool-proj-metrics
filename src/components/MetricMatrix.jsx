@@ -1,9 +1,10 @@
 import * as d3 from "d3";
-import { saveSvgAsPng } from "save-svg-as-png";
 import { useEffect, useRef, useState } from "react";
-import "./styles/metricmatrix.css";
-import csvData from "../data/per_epoch_for_d3.csv";
+import { saveSvgAsPng } from "save-svg-as-png";
 import { PER_METRIC_SCALES } from "../common/scale";
+import { METRIC_NAMES, NICE_METRIC_NAMES, NICE_PROJ_NAMES } from "../common/names";
+import csvData from "../data/per_epoch_for_d3.csv";
+import "./styles/metricmatrix.css";
 
 const width = 1150;
 const cellSize = 56;
@@ -42,52 +43,6 @@ function findParamsOfClickedRect(rect) {
     return { k, dataset: datasetName, metric: metricName, projection: projName };
 }
 
-const METRIC_NAMES = [
-    "average_local_error",
-    "class_aware_continuity",
-    "class_aware_trustworthiness",
-    "continuity",
-    "distance_consistency",
-    "false_neighbors",
-    "jaccard",
-    "mrre_data",
-    "mrre_proj",
-    "neighborhood_hit",
-    "normalized_stress",
-    "pearson_correlation",
-    "procrustes",
-    "scale_normalized_stress",
-    "shepard_goodness",
-    "true_neighbors",
-    "trustworthiness",
-];
-
-const NICE_METRIC_NAMES = {
-    average_local_error: "Avg. Local Error",
-    class_aware_continuity: "Class-Aware Continuity",
-    class_aware_trustworthiness: "Class-Aware Trustworthiness",
-    continuity: "Continuity",
-    distance_consistency: "Distance Consistency",
-    false_neighbors: "False Neighbors",
-    jaccard: "Jaccard",
-    // "missing_neighbors",
-    mrre_data: "MRRE Data",
-    mrre_proj: "MRRE Projection",
-    neighborhood_hit: "Neighborhood Hit",
-    normalized_stress: "Normalized Stress",
-    pearson_correlation: "Pearson R",
-    procrustes: "Procrustes",
-    scale_normalized_stress: "Scale-Normalized Stress",
-    shepard_goodness: "Shepard Goodness",
-    true_neighbors: "True Neighbors",
-    trustworthiness: "Trustworthiness",
-};
-const NICE_PROJ_NAMES = {
-    tsne: "t-SNE",
-    mds: "MDS",
-    isomap: "Isomap",
-    umap: "UMAP",
-};
 /**
  * @param {Array<object>} arr
  */
@@ -107,7 +62,7 @@ const headerHeight = 2.5 * cellSize;
 const MetricMatrix = ({ setPostprocessCase }) => {
     const headerRef = useRef();
     const contentRef = useRef();
-    const [kParam, setKParam] = useState(1);
+    const [kParam, setKParam] = useState(51);
 
     useEffect(() => {
         d3.csv(csvData, d3.autoType).then((data2) => {

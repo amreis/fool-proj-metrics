@@ -3,7 +3,11 @@ div#postprocess-part {
   flex-direction: row;
 }
 div.paramsPanel {
+  margin-left: 1em;
   margin-right: 1em;
+  * {
+    font: 15px monospace;
+  }
 }
 div.paramsPanel > div {
   width: max-content;

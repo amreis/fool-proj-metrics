@@ -5,7 +5,7 @@ import PostprocessMatrix from "./components/PostprocessMatrix";
 
 function App() {
   const [postprocessCase, setPostprocessCase] = useState({
-    k: 1,
+    k: 51,
     metric: "trustworthiness",
     dataset: "mnist",
     projection: "tsne",

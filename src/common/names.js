@@ -1,0 +1,47 @@
+export const METRIC_NAMES = [
+  "average_local_error",
+  "class_aware_continuity",
+  "class_aware_trustworthiness",
+  "continuity",
+  "distance_consistency",
+  "false_neighbors",
+  "jaccard",
+  "mrre_data",
+  "mrre_proj",
+  "neighborhood_hit",
+  "normalized_stress",
+  "pearson_correlation",
+  "procrustes",
+  "scale_normalized_stress",
+  "shepard_goodness",
+  "true_neighbors",
+  "trustworthiness",
+];
+
+export const NICE_METRIC_NAMES = {
+  average_local_error: "Avg. Local Error",
+  class_aware_continuity: "Class-Aware Continuity",
+  class_aware_trustworthiness: "Class-Aware Trustworthiness",
+  continuity: "Continuity",
+  distance_consistency: "Distance Consistency",
+  false_neighbors: "False Neighbors",
+  jaccard: "Jaccard",
+  // "missing_neighbors",
+  mrre_data: "MRRE Data",
+  mrre_proj: "MRRE Projection",
+  neighborhood_hit: "Neighborhood Hit",
+  normalized_stress: "Normalized Stress",
+  pearson_correlation: "Pearson R",
+  procrustes: "Procrustes",
+  scale_normalized_stress: "Scale-Normalized Stress",
+  shepard_goodness: "Shepard Goodness",
+  true_neighbors: "True Neighbors",
+  trustworthiness: "Trustworthiness",
+};
+
+export const NICE_PROJ_NAMES = {
+    tsne: "t-SNE",
+    mds: "MDS",
+    isomap: "Isomap",
+    umap: "UMAP",
+};

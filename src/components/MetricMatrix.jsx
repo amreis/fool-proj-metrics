@@ -8,7 +8,33 @@ import "./styles/metricmatrix.css";
 
 const width = 1150;
 const cellSize = 56;
-const height = cellSize * 4;
+const perMetricHeight = cellSize * 4;
+
+function validateAndSetPostprocessCase(params, callbackOnSuccess) {
+    const { k, metric, projection, dataset } = params;
+
+    const fName =
+        "../data/compressed/" +
+        `p${projection.toLowerCase()}` +
+        `_d${dataset.toLowerCase()}` +
+        `_m${metric.toLowerCase()}` +
+        `_k${k}` +
+        ".jpg";
+    try {
+        require.resolve(
+            "../data/compressed/" +
+                `p${projection.toLowerCase()}` +
+                `_d${dataset.toLowerCase()}` +
+                `_m${metric.toLowerCase()}` +
+                `_k${k}` +
+                ".jpg"
+        );
+    } catch {
+        console.warn(fName, " not found");
+        return;
+    }
+    callbackOnSuccess(params);
+}
 
 /**
  * @param {SVGRectElement} rect
@@ -82,6 +108,9 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 (d) => d.metric,
                 (d) => d.projection
             );
+            const uniqueMetricsInData = ((d) => [...new Set(d.map((row) => row.metric))].length)(
+                data
+            );
 
             const headerSvg = d3.select(headerRef.current);
             headerSvg.selectChildren("*").remove();
@@ -110,8 +139,8 @@ const MetricMatrix = ({ setPostprocessCase }) => {
             const svg = d3.select(contentRef.current);
             svg.selectChildren("*").remove();
             svg.attr("width", width)
-                .attr("height", height * 30)
-                .attr("viewBox", [0, 0, width, height * 30])
+                .attr("height", perMetricHeight * 30)
+                .attr("viewBox", [0, 0, width, perMetricHeight * 30])
                 .attr("style", "font: 12px sans-serif;");
 
             const perDataset = svg
@@ -121,7 +150,7 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .classed("per-dataset", true)
                 .attr(
                     "transform",
-                    (_d, i) => `translate(50.5, ${4 * height * 1.2 * i + cellSize})`
+                    (_d, i) => `translate(50.5, ${uniqueMetricsInData * perMetricHeight * 1.2 * i + cellSize})`
                 );
             perDataset
                 .append("text")
@@ -134,11 +163,11 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .data(([, values]) => values)
                 .join("g")
                 .classed("per-metric", true)
-                .attr("transform", (_d, i) => `translate(0.0, ${height * 1.1 * i})`);
+                .attr("transform", (_d, i) => `translate(0.0, ${perMetricHeight * 1.1 * i})`);
             perMetric
                 .append("text")
                 .attr("text-anchor", "center")
-                .attr("transform", `translate(0.0, ${height / 2 + cellSize}) rotate(270)`)
+                .attr("transform", `translate(0.0, ${perMetricHeight / 2 + cellSize}) rotate(270)`)
                 .text(([key]) => key.toUpperCase());
 
             const perProj = perMetric
@@ -146,7 +175,7 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .data(([, values]) => values)
                 .join("g")
                 .classed("per-projection", true)
-                .attr("transform", (_d, i) => `translate(100.5, ${(height / 4) * 1.0 * i})`);
+                .attr("transform", (_d, i) => `translate(100.5, ${(perMetricHeight / 4) * 1.0 * i})`);
 
             const perProj2 = perProj
                 .selectAll()
@@ -161,12 +190,29 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .classed("metric-val-rect", true)
                 .attr("fill", ([metricName, val]) => PER_METRIC_SCALES[metricName](val))
                 .on("dblclick", function (e, d) {
-                    d3.selectAll("rect.active").classed("active", false);
+                    d3.selectAll(".selection-callout").remove();
                 })
                 .on("click", function (e, d) {
-                    d3.selectAll("rect.active").classed("active", false);
-                    d3.select(this).classed("active", true);
-                    setPostprocessCase(findParamsOfClickedRect(this));
+                    d3.selectAll(".selection-callout").remove();
+                    const rect = d3.select(this);
+                    const transform = d3.select(this.parentNode.parentNode).attr("transform");
+                    d3.select(this.parentNode.parentNode.parentNode)
+                        .insert("rect", "#last + *")
+                        .classed("selection-callout", true)
+                        .attr("fill", "transparent")
+                        .attr("stroke", "red")
+                        .attr("stroke-width", "2px")
+                        .attr("stroke-dasharray", [10])
+                        .style("pointer-events", "none")
+                        .attr("x", -cellSize)
+                        .attr("y", rect.attr("y"))
+                        .attr("transform", transform)
+                        .attr("width", 18 * cellSize)
+                        .attr("height", cellSize);
+                    validateAndSetPostprocessCase(
+                        findParamsOfClickedRect(this),
+                        setPostprocessCase
+                    );
                 })
                 .append("title")
                 .text((d, _i) => d[0]);
@@ -199,12 +245,61 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .attr("transform", "translate(-50.0, 50)");
 
             perMetric
+                .selectAll("rect.metric-callout")
+                .data((d) => {
+                    if (d[0] === "all") {
+                        return [];
+                    }
+                    return [d];
+                })
+                .enter()
                 .append("rect")
                 .classed("metric-callout", true)
-                .attr("height", 4 * cellSize)
-                .attr("x", ([key]) => cellSize * METRIC_NAMES.indexOf(key) + 100.5)
+                .attr("height", perMetricHeight)
+                .attr("x", (d) => {
+                    return cellSize * METRIC_NAMES.indexOf(d[0]) + 100.5;
+                })
                 .attr("y", 15)
                 .attr("width", cellSize);
+
+            d3.selectAll(".per-dataset")
+                .selectChild(".per-metric")
+                .call((selection) => {
+                    selection
+                        .append("rect")
+                        .classed("metric-callout", true)
+                        .attr("height", perMetricHeight)
+                        .attr("x", cellSize * METRIC_NAMES.indexOf("continuity") + 100.5)
+                        .attr("y", 15)
+                        .attr("width", cellSize);
+                })
+                .call((selection) => {
+                    selection
+                        .append("rect")
+                        .classed("metric-callout", true)
+                        .attr("height", perMetricHeight)
+                        .attr("x", cellSize * METRIC_NAMES.indexOf("trustworthiness") + 100.5)
+                        .attr("y", 15)
+                        .attr("width", cellSize);
+                })
+                .call((selection) => {
+                    selection
+                        .append("rect")
+                        .classed("metric-callout", true)
+                        .attr("height", perMetricHeight)
+                        .attr("x", cellSize * METRIC_NAMES.indexOf("jaccard") + 100.5)
+                        .attr("y", 15)
+                        .attr("width", cellSize);
+                })
+                .call((selection) => {
+                    selection
+                        .append("rect")
+                        .classed("metric-callout", true)
+                        .attr("height", perMetricHeight)
+                        .attr("x", cellSize * METRIC_NAMES.indexOf("neighborhood_hit") + 100.5)
+                        .attr("y", 15)
+                        .attr("width", cellSize);
+                });
         });
     }, [kParam, setPostprocessCase]);
 

@@ -37,6 +37,7 @@ export const NICE_METRIC_NAMES = {
     shepard_goodness: "Shepard Goodness",
     true_neighbors: "True Neighbors",
     trustworthiness: "Trustworthiness",
+    all: "ALL",
 };
 
 export const NICE_PROJ_NAMES = {

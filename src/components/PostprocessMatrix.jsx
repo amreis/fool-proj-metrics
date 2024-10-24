@@ -7,7 +7,13 @@ import csvPostprocess from "../data/postprocess_for_d3.csv";
 import "./styles/postprocessmatrix.css";
 
 const K_VALS = [1, 7, 21, 51];
-const TARGET_METRICS = ["trustworthiness", "continuity", "jaccard", "neighborhood_hit"].sort();
+const TARGET_METRICS = [
+    "trustworthiness",
+    "continuity",
+    "jaccard",
+    "neighborhood_hit",
+    "all",
+].sort();
 const PROJECTIONS = ["tsne", "umap", "mds", "isomap"].sort();
 const DATASETS = ["mnist", "fashionmnist", "spambase", "har", "reuters", "usps"].sort();
 const POSTPROCESS_IDS = ["projnn", "truenn", "delaunay"];
@@ -168,6 +174,9 @@ const PostprocessMatrix = ({ caseToShow, setPostprocessCase }) => {
         if (postprocessData === null || foolerData === null) {
             return;
         }
+        const rootSvg = d3.select(ref.current);
+        rootSvg.selectChildren("g").remove();
+        rootSvg.style("font", "12px sans-serif");
         const relevantTuples = [
             ...foolerData.filter((d) => {
                 const { k, projection, dataset, metric } = caseToShow;
@@ -198,10 +207,10 @@ const PostprocessMatrix = ({ caseToShow, setPostprocessCase }) => {
                 caseToShow.dataset === d.dataset &&
                 caseToShow.metric === d.metric
         );
-
-        const rootSvg = d3.select(ref.current);
-        rootSvg.selectChildren("g").remove();
-        rootSvg.style("font", "12px sans-serif");
+        if (refTuple.metric === "all") {
+            // TODO. needs special treatment.
+            return;
+        }
 
         {
             const g = rootSvg.append("g");

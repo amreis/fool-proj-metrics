@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/fool-proj-metrics/static/css/main.07b6afb2.css",
-    "main.js": "/fool-proj-metrics/static/js/main.7cb6177f.js",
+    "main.js": "/fool-proj-metrics/static/js/main.6c3a3e21.js",
     "static/js/453.3e60a3e9.chunk.js": "/fool-proj-metrics/static/js/453.3e60a3e9.chunk.js",
     "static/media/pmds_dmnist_mjaccard_k7.jpg": "/fool-proj-metrics/static/media/pmds_dmnist_mjaccard_k7.b48890e117810e80c1bb.jpg",
     "static/media/pmds_dmnist_mjaccard_k1.jpg": "/fool-proj-metrics/static/media/pmds_dmnist_mjaccard_k1.9bd92fd2774f5de99882.jpg",
@@ -487,11 +487,11 @@
     "static/media/pumap_dreuters_mall_k21.jpg": "/fool-proj-metrics/static/media/pumap_dreuters_mall_k21.15928bf7066b4973c061.jpg",
     "index.html": "/fool-proj-metrics/index.html",
     "main.07b6afb2.css.map": "/fool-proj-metrics/static/css/main.07b6afb2.css.map",
-    "main.7cb6177f.js.map": "/fool-proj-metrics/static/js/main.7cb6177f.js.map",
+    "main.6c3a3e21.js.map": "/fool-proj-metrics/static/js/main.6c3a3e21.js.map",
     "453.3e60a3e9.chunk.js.map": "/fool-proj-metrics/static/js/453.3e60a3e9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.07b6afb2.css",
-    "static/js/main.7cb6177f.js"
+    "static/js/main.6c3a3e21.js"
   ]
 }

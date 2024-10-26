@@ -45,6 +45,18 @@ const Controls = ({ updateMatrix, params }) => {
     }, [params]);
 
     useEffect(() => {
+        try {
+            require.resolve(
+                "../data/compressed/" +
+                    `p${projectionParam.toLowerCase()}` +
+                    `_d${datasetParam.toLowerCase()}` +
+                    `_m${metricParam.toLowerCase()}` +
+                    `_k${kParam}` +
+                    ".jpg"
+            );
+        } catch {
+            return;
+        }
         updateMatrix({
             k: kParam,
             metric: metricParam,

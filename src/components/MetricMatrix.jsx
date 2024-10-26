@@ -84,12 +84,21 @@ function processDiffToOriginalProj(arr) {
     );
     return diffs;
 }
+
+function getLearnedProjMetrics(arr) {
+    const learnedMetrics = arr.find((d) => d.epoch === 1000);
+    return Object.fromEntries(
+        Object.entries(learnedMetrics).filter(([k]) => METRIC_NAMES.includes(k))
+    );
+}
+
 const headerHeight = 2.5 * cellSize;
 
 const MetricMatrix = ({ setPostprocessCase }) => {
     const headerRef = useRef();
     const contentRef = useRef();
     const [kParam, setKParam] = useState(51);
+    const [showDiffs, setShowDiffs] = useState(true);
 
     useEffect(() => {
         d3.csv(csvData, d3.autoType).then((data2) => {
@@ -150,7 +159,10 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .classed("per-dataset", true)
                 .attr(
                     "transform",
-                    (_d, i) => `translate(50.5, ${uniqueMetricsInData * perMetricHeight * 1.2 * i + cellSize})`
+                    (_d, i) =>
+                        `translate(50.5, ${
+                            uniqueMetricsInData * perMetricHeight * 1.2 * i + cellSize
+                        })`
                 );
             perDataset
                 .append("text")
@@ -175,11 +187,18 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .data(([, values]) => values)
                 .join("g")
                 .classed("per-projection", true)
-                .attr("transform", (_d, i) => `translate(100.5, ${(perMetricHeight / 4) * 1.0 * i})`);
+                .attr(
+                    "transform",
+                    (_d, i) => `translate(100.5, ${(perMetricHeight / 4) * 1.0 * i})`
+                );
 
             const perProj2 = perProj
                 .selectAll()
-                .data(([, values]) => Object.entries(processDiffToOriginalProj(values)))
+                .data(([, values]) =>
+                    showDiffs
+                        ? Object.entries(processDiffToOriginalProj(values))
+                        : Object.entries(getLearnedProjMetrics(values))
+                )
                 .join("g");
             const rects = perProj2.append("rect");
             rects
@@ -301,7 +320,7 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                         .attr("width", cellSize);
                 });
         });
-    }, [kParam, setPostprocessCase]);
+    }, [kParam, setPostprocessCase, showDiffs]);
 
     return (
         <div id="main-container">
@@ -334,6 +353,23 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                             </option>
                         ))}
                     </select>
+                </div>
+                <div>
+                    Show:
+                    <input
+                        type="radio"
+                        name="metric-vals-mode"
+                        checked={showDiffs}
+                        onChange={() => setShowDiffs(true)}
+                    />
+                    Deltas
+                    <input
+                        type="radio"
+                        name="metric-vals-mode"
+                        checked={!showDiffs}
+                        onChange={() => setShowDiffs(false)}
+                    />
+                    Absolutes
                 </div>
             </aside>
             <div id="matrix-container">

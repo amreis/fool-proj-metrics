@@ -194,11 +194,13 @@ const MetricMatrix = ({ setPostprocessCase }) => {
 
             const perProj2 = perProj
                 .selectAll()
-                .data(([, values]) =>
-                    showDiffs
-                        ? Object.entries(processDiffToOriginalProj(values))
-                        : Object.entries(getLearnedProjMetrics(values))
-                )
+                .data(([, values]) => {
+                    const diffs = processDiffToOriginalProj(values);
+                    const absolutes = getLearnedProjMetrics(values);
+
+                    const zipped = d3.zip(Object.entries(diffs), Object.entries(absolutes));
+                    return zipped;
+                })
                 .join("g");
             const rects = perProj2.append("rect");
             rects
@@ -207,7 +209,7 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .attr("x", (_d, i) => i * (1.0 * cellSize))
                 .attr("y", 15)
                 .classed("metric-val-rect", true)
-                .attr("fill", ([metricName, val]) => PER_METRIC_SCALES[metricName](val))
+                .attr("fill", ([[metricName, diff]]) => PER_METRIC_SCALES[metricName](diff))
                 .on("dblclick", function (e, d) {
                     d3.selectAll(".selection-callout").remove();
                 })
@@ -243,7 +245,14 @@ const MetricMatrix = ({ setPostprocessCase }) => {
                 .attr("y", 35)
                 .attr("fill", "#000")
                 .style("font-weight", "bold")
-                .text((d, _i) => (d[1] >= 0 ? "+" : "-") + Math.abs(d[1] + 0.0001).toFixed(3));
+                .style("text-align", "center")
+                .text(([[, diff], [, abs]], _i) => {
+                    const val = showDiffs ? diff : abs;
+                    return (
+                        (showDiffs ? (val >= 0 ? "+" : "-") : "") +
+                        Math.abs(val + 0.0001).toFixed(3)
+                    );
+                });
             perProj2
                 .insert("text", "#first + *")
                 .classed("metric-ref-val", true)

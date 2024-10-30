@@ -77,7 +77,7 @@ function processDiffToOriginalProj(arr: FoolerDataRow[]) {
 
   const diffs = Object.fromEntries(
     Object.keys(learnedMetrics)
-      .filter((k): k is keyof Metrics => METRIC_NAMES.includes(k))
+      .filter((k): k is keyof Metrics => (METRIC_NAMES as string[]).includes(k))
       .map((k) => [k, learnedMetrics[k] - origMetrics[k]])
   );
   return diffs;
@@ -86,7 +86,7 @@ function processDiffToOriginalProj(arr: FoolerDataRow[]) {
 function getLearnedProjMetrics(arr: FoolerDataRow[]) {
   const learnedMetrics = arr.find((d) => d.epoch === 1000)!;
   return Object.fromEntries(
-    Object.entries(learnedMetrics).filter(([k]) => METRIC_NAMES.includes(k))
+    Object.entries(learnedMetrics).filter(([k]) => (METRIC_NAMES as string[]).includes(k))
   );
 }
 
@@ -240,7 +240,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .classed("metric-ref-val", true)
         .data(([, data]) =>
           Object.entries(data.find((row) => row.epoch === -1)!).filter(([metricName]) =>
-            METRIC_NAMES.includes(metricName)
+            (METRIC_NAMES as string[]).includes(metricName)
           )
         )
         .attr("x", (_d, i) => 10 + i * (1.0 * cellSize))
@@ -267,7 +267,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .classed("metric-callout", true)
         .attr("height", perMetricHeight)
         .attr("x", (d) => {
-          return cellSize * METRIC_NAMES.indexOf(d[0]) + 100.5;
+          return cellSize * (METRIC_NAMES as string[]).indexOf(d[0]) + 100.5;
         })
         .attr("y", 15)
         .attr("width", cellSize);

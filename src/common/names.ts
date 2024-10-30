@@ -22,12 +22,9 @@ const metricNamesProps: MetricNamesObject = {
   trustworthiness: undefined,
 };
 
-export const METRIC_NAMES = Object.keys(metricNamesProps) as unknown as Exclude<
-  keyof Metrics,
-  "missing_neighbors"
->;
+export const METRIC_NAMES = Object.keys(metricNamesProps) as (keyof MetricNamesObject)[];
 
-export const NICE_METRIC_NAMES: { [k: string]: string } = {
+export const NICE_METRIC_NAMES: { [k in keyof MetricNamesObject | "all"]: string } = {
   average_local_error: "Avg. Local Error",
   class_aware_continuity: "Class-Aware Continuity",
   class_aware_trustworthiness: "Class-Aware Trustworthiness",

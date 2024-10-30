@@ -1,18 +1,9 @@
 import * as d3 from "d3";
 import { useEffect, useRef, useState } from "react";
 import { saveSvgAsPng } from "save-svg-as-png";
-import {
-  METRIC_NAMES,
-  NICE_METRIC_NAMES,
-  NICE_PROJ_NAMES,
-} from "./common/names";
+import { METRIC_NAMES, NICE_METRIC_NAMES, NICE_PROJ_NAMES } from "./common/names";
 import { PER_METRIC_SCALES } from "./common/scale";
-import {
-  FoolerDataRow,
-  Metrics,
-  TargetMetric,
-  VisParams,
-} from "./common/schema";
+import { FoolerDataRow, Metrics, TargetMetric, VisParams } from "./common/schema";
 import csvData from "./data/per_epoch_for_d3.csv?url";
 import "./metricmatrix.css";
 
@@ -45,9 +36,7 @@ function validateAndSetPostprocessCase(
 }
 
 function findParamsOfClickedRect(rect: SVGRectElement): VisParams {
-  const k = parseInt(
-    (document.getElementById("k-param-select") as HTMLSelectElement).value
-  );
+  const k = parseInt((document.getElementById("k-param-select") as HTMLSelectElement).value);
 
   let projName = undefined;
   let datasetName = undefined;
@@ -103,11 +92,7 @@ function getLearnedProjMetrics(arr: FoolerDataRow[]) {
 
 const headerHeight = 2.5 * cellSize;
 
-const MetricMatrix = ({
-  setPostprocessCase,
-}: {
-  setPostprocessCase: (p: VisParams) => void;
-}) => {
+const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParams) => void }) => {
   const headerRef = useRef<SVGSVGElement>(null);
   const contentRef = useRef<SVGSVGElement>(null);
   const [kParam, setKParam] = useState(51);
@@ -115,10 +100,7 @@ const MetricMatrix = ({
 
   useEffect(() => {
     d3.csv(csvData, d3.autoType<FoolerDataRow, string>).then((data2) => {
-      const data = d3.filter(
-        data2,
-        (d) => d.k === kParam && (d.epoch === -1 || d.epoch === 1000)
-      );
+      const data = d3.filter(data2, (d) => d.k === kParam && (d.epoch === -1 || d.epoch === 1000));
       const groups = d3.groups(
         d3.sort(
           data,
@@ -130,8 +112,7 @@ const MetricMatrix = ({
         (d) => d.metric,
         (d) => d.projection
       );
-      const uniqueMetricsInData = ((d) =>
-        [...new Set(d.map((row) => row.metric))].length)(data);
+      const uniqueMetricsInData = ((d) => [...new Set(d.map((row) => row.metric))].length)(data);
 
       const headerSvg = d3.select(headerRef.current!);
       headerSvg.selectChildren("*").remove();
@@ -153,10 +134,7 @@ const MetricMatrix = ({
         .text((d) => NICE_METRIC_NAMES[d])
         .attr(
           "transform",
-          (_d, i) =>
-            `translate(${
-              151.0 + (i + 0.5) * cellSize
-            }, ${headerHeight}) rotate(-45)`
+          (_d, i) => `translate(${151.0 + (i + 0.5) * cellSize}, ${headerHeight}) rotate(-45)`
         );
 
       const svg = d3.select(contentRef.current!);
@@ -175,9 +153,7 @@ const MetricMatrix = ({
         .attr(
           "transform",
           (_d, i) =>
-            `translate(50.5, ${
-              uniqueMetricsInData * perMetricHeight * 1.2 * i + cellSize
-            })`
+            `translate(50.5, ${uniqueMetricsInData * perMetricHeight * 1.2 * i + cellSize})`
         );
       perDataset
         .append("text")
@@ -190,17 +166,11 @@ const MetricMatrix = ({
         .data(([, values]) => values)
         .join("g")
         .classed("per-metric", true)
-        .attr(
-          "transform",
-          (_d, i) => `translate(0.0, ${perMetricHeight * 1.1 * i})`
-        );
+        .attr("transform", (_d, i) => `translate(0.0, ${perMetricHeight * 1.1 * i})`);
       perMetric
         .append("text")
         .attr("text-anchor", "center")
-        .attr(
-          "transform",
-          `translate(0.0, ${perMetricHeight / 2 + cellSize}) rotate(270)`
-        )
+        .attr("transform", `translate(0.0, ${perMetricHeight / 2 + cellSize}) rotate(270)`)
         .text(([key]) => key.toUpperCase());
 
       const perProj = perMetric
@@ -208,10 +178,7 @@ const MetricMatrix = ({
         .data(([, values]) => values)
         .join("g")
         .classed("per-projection", true)
-        .attr(
-          "transform",
-          (_d, i) => `translate(100.5, ${(perMetricHeight / 4) * 1.0 * i})`
-        );
+        .attr("transform", (_d, i) => `translate(100.5, ${(perMetricHeight / 4) * 1.0 * i})`);
 
       const perProj2 = perProj
         .selectAll()
@@ -219,10 +186,7 @@ const MetricMatrix = ({
           const diffs = processDiffToOriginalProj(values);
           const absolutes = getLearnedProjMetrics(values);
 
-          const zipped = d3.zip(
-            Object.entries(diffs),
-            Object.entries(absolutes)
-          );
+          const zipped = d3.zip(Object.entries(diffs), Object.entries(absolutes));
           return zipped;
         })
         .join("g");
@@ -233,18 +197,14 @@ const MetricMatrix = ({
         .attr("x", (_d, i) => i * (1.0 * cellSize))
         .attr("y", 15)
         .classed("metric-val-rect", true)
-        .attr("fill", ([[metricName, diff]]) =>
-          PER_METRIC_SCALES[metricName](diff)
-        )
+        .attr("fill", ([[metricName, diff]]) => PER_METRIC_SCALES[metricName](diff))
         .on("dblclick", function () {
           d3.selectAll(".selection-callout").remove();
         })
         .on("click", function () {
           d3.selectAll(".selection-callout").remove();
           const rect = d3.select(this);
-          const transform = d3
-            .select(this.parentElement!.parentElement!)
-            .attr("transform");
+          const transform = d3.select(this.parentElement!.parentElement!).attr("transform");
           d3.select(this.parentElement!.parentElement!.parentElement)
             .insert("rect", "#last + *")
             .classed("selection-callout", true)
@@ -258,10 +218,7 @@ const MetricMatrix = ({
             .attr("transform", transform)
             .attr("width", 18 * cellSize)
             .attr("height", cellSize);
-          validateAndSetPostprocessCase(
-            findParamsOfClickedRect(this),
-            setPostprocessCase
-          );
+          validateAndSetPostprocessCase(findParamsOfClickedRect(this), setPostprocessCase);
         })
         .append("title")
         .text((d, _i) => d[0][0]);
@@ -276,17 +233,14 @@ const MetricMatrix = ({
         .style("text-align", "center")
         .text(([[, diff], [, abs]], _i) => {
           const val = showDiffs ? diff : abs;
-          return (
-            (showDiffs ? (val >= 0 ? "+" : "-") : "") +
-            Math.abs(val + 0.0001).toFixed(3)
-          );
+          return (showDiffs ? (val >= 0 ? "+" : "-") : "") + Math.abs(val + 0.0001).toFixed(3);
         });
       perProj2
         .insert("text", "#first + *")
         .classed("metric-ref-val", true)
         .data(([, data]) =>
-          Object.entries(data.find((row) => row.epoch === -1)!).filter(
-            ([metricName]) => METRIC_NAMES.includes(metricName)
+          Object.entries(data.find((row) => row.epoch === -1)!).filter(([metricName]) =>
+            METRIC_NAMES.includes(metricName)
           )
         )
         .attr("x", (_d, i) => 10 + i * (1.0 * cellSize))
@@ -334,10 +288,7 @@ const MetricMatrix = ({
             .append("rect")
             .classed("metric-callout", true)
             .attr("height", perMetricHeight)
-            .attr(
-              "x",
-              cellSize * METRIC_NAMES.indexOf("trustworthiness") + 100.5
-            )
+            .attr("x", cellSize * METRIC_NAMES.indexOf("trustworthiness") + 100.5)
             .attr("y", 15)
             .attr("width", cellSize);
         })
@@ -355,10 +306,7 @@ const MetricMatrix = ({
             .append("rect")
             .classed("metric-callout", true)
             .attr("height", perMetricHeight)
-            .attr(
-              "x",
-              cellSize * METRIC_NAMES.indexOf("neighborhood_hit") + 100.5
-            )
+            .attr("x", cellSize * METRIC_NAMES.indexOf("neighborhood_hit") + 100.5)
             .attr("y", 15)
             .attr("width", cellSize);
         });

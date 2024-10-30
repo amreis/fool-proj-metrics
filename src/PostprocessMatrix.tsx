@@ -2,25 +2,14 @@ import * as d3 from "d3";
 import { useEffect, useRef, useState } from "react";
 import { NICE_METRIC_NAMES, NICE_PROJ_NAMES } from "./common/names.js";
 import { PER_METRIC_SCALES } from "./common/scale.js";
-import {
-  FoolerDataRow,
-  PostprocessDataRow,
-  TargetMetric,
-  VisParams,
-} from "./common/schema.js";
+import { FoolerDataRow, PostprocessDataRow, TargetMetric, VisParams } from "./common/schema.js";
 import csvFooler from "./data/per_epoch_for_d3.csv?url";
 import csvPostprocess from "./data/postprocess_for_d3.csv?url";
 import "./postprocessmatrix.css";
 
 const K_VALS = [1, 7, 21, 51];
 const TARGET_METRICS: TargetMetric[] = (
-  [
-    "trustworthiness",
-    "continuity",
-    "jaccard",
-    "neighborhood_hit",
-    "all",
-  ] as TargetMetric[]
+  ["trustworthiness", "continuity", "jaccard", "neighborhood_hit", "all"] as TargetMetric[]
 ).sort();
 // type TARGET_METRICS =
 //   | "all"
@@ -30,14 +19,7 @@ const TARGET_METRICS: TargetMetric[] = (
 //   | "trustworthiness";
 
 const PROJECTIONS = ["tsne", "umap", "mds", "isomap"].sort();
-const DATASETS = [
-  "mnist",
-  "fashionmnist",
-  "spambase",
-  "har",
-  "reuters",
-  "usps",
-].sort();
+const DATASETS = ["mnist", "fashionmnist", "spambase", "har", "reuters", "usps"].sort();
 const POSTPROCESS_IDS = ["projnn", "truenn", "delaunay"];
 
 const Controls = ({
@@ -185,11 +167,8 @@ const PostprocessMatrix = ({
   caseToShow: VisParams;
   setPostprocessCase: (p: VisParams) => void;
 }) => {
-  const [postprocessData, setPostprocessData] =
-    useState<Array<PostprocessDataRow> | null>(null);
-  const [foolerData, setFoolerData] = useState<Array<FoolerDataRow> | null>(
-    null
-  );
+  const [postprocessData, setPostprocessData] = useState<Array<PostprocessDataRow> | null>(null);
+  const [foolerData, setFoolerData] = useState<Array<FoolerDataRow> | null>(null);
   const ref = useRef<SVGSVGElement>(null);
   const svgWidth = 1600;
 
@@ -288,9 +267,7 @@ const PostprocessMatrix = ({
         .attr("y", 28)
         .attr("fill", "#000000")
         .style("font-weight", "bold")
-        .text(
-          (diffToRef >= 0 ? "+" : "-") + Math.abs(diffToRef + 0.0001).toFixed(3)
-        );
+        .text((diffToRef >= 0 ? "+" : "-") + Math.abs(diffToRef + 0.0001).toFixed(3));
     }
 
     const row = relevantTuples[0] as PostprocessDataRow;
@@ -298,8 +275,7 @@ const PostprocessMatrix = ({
     POSTPROCESS_IDS.forEach((iMethod, ix) => {
       const row = relevantTuples
         .filter(
-          (row): row is PostprocessDataRow =>
-            (row as PostprocessDataRow).method !== undefined
+          (row): row is PostprocessDataRow => (row as PostprocessDataRow).method !== undefined
         )
         .find((row) => row.method === iMethod)!;
 

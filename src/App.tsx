@@ -16,10 +16,7 @@ function App() {
     <>
       <div className="App">
         <MetricMatrix setPostprocessCase={setPostprocessCase} />
-        <PostprocessMatrix
-          caseToShow={postprocessCase}
-          setPostprocessCase={setPostprocessCase}
-        />
+        <PostprocessMatrix caseToShow={postprocessCase} setPostprocessCase={setPostprocessCase} />
       </div>
     </>
   );

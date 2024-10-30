@@ -1,9 +1,6 @@
 import { Metrics } from "./schema";
 
-type MetricNamesObject = Record<
-  Exclude<keyof Metrics, "missing_neighbors">,
-  undefined
->;
+type MetricNamesObject = Record<Exclude<keyof Metrics, "missing_neighbors">, undefined>;
 
 const metricNamesProps: MetricNamesObject = {
   average_local_error: undefined,

@@ -28,10 +28,7 @@ function validateAndSetPostprocessCase(
 
   const fURL = new URL(
     "/src/data/compressed/" +
-      `p${projection.toLowerCase()}` +
-      `_d${dataset.toLowerCase()}` +
-      `_m${metric.toLowerCase()}` +
-      `_k${k}` +
+      `p${projection.toLowerCase()}_d${dataset.toLowerCase()}_m${metric.toLowerCase()}_k${k}` +
       ".jpg",
     import.meta.url
   );
@@ -55,7 +52,7 @@ function findParamsOfClickedRect(rect: SVGRectElement): VisParams {
   let projName = undefined;
   let datasetName = undefined;
   let metricName = undefined;
-  let elem : SVGElement | HTMLElement = rect;
+  let elem: SVGElement | HTMLElement = rect;
 
   const extractChildTextValue = (node: HTMLElement) =>
     Array.from(node.children).find((n) => n.tagName === "text")!.innerHTML;

@@ -10,9 +10,6 @@ import {
 } from "./common/schema.js";
 import csvFooler from "./data/per_epoch_for_d3.csv?url";
 import csvPostprocess from "./data/postprocess_for_d3.csv?url";
-// const csvFooler = (await import("./data/per_epoch_for_d3.csv?url")).default;
-// const csvPostprocess = (await import("./data/postprocess_for_d3.csv?url"))
-  // .default;
 import "./postprocessmatrix.css";
 
 const K_VALS = [1, 7, 21, 51];
@@ -188,7 +185,6 @@ const PostprocessMatrix = ({
   caseToShow: VisParams;
   setPostprocessCase: (p: VisParams) => void;
 }) => {
-  caseToShow;
   const [postprocessData, setPostprocessData] =
     useState<Array<PostprocessDataRow> | null>(null);
   const [foolerData, setFoolerData] = useState<Array<FoolerDataRow> | null>(

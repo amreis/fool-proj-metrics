@@ -2,10 +2,10 @@ import { useState } from "react";
 import "./App.css";
 import PostprocessMatrix from "./PostprocessMatrix.js";
 import MetricMatrix from "./MetricMatrix.js";
-import { TargetMetric } from "./common/schema.js";
+import { TargetMetric, VisParams } from "./common/schema.js";
 
 function App() {
-  const [postprocessCase, setPostprocessCase] = useState({
+  const [postprocessCase, setPostprocessCase] = useState<VisParams>({
     k: 51,
     metric: "trustworthiness" as TargetMetric,
     dataset: "mnist",

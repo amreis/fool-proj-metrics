@@ -18,13 +18,15 @@ function validateAndSetPostprocessCase(
   const { k, metric, projection, dataset } = params;
 
   const fURL = new URL(
-    "/src/data/compressed/" +
+    "./data/compressed/" +
       `p${projection.toLowerCase()}_d${dataset.toLowerCase()}_m${metric.toLowerCase()}_k${k}` +
       ".jpg",
     import.meta.url
   );
 
-  fetch(fURL)
+  // import(`/src/data/compressed/p${projection.toLowerCase()}_d${dataset.toLowerCase()}_m${metric.toLowerCase()}_k${k}.jpg`).then((response) => callbackOnSuccess(params));
+
+  fetch(fURL.href)
     .then((response) => {
       if (response.ok) {
         callbackOnSuccess(params);

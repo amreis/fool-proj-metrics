@@ -56,7 +56,7 @@ const Controls = ({
 
   useEffect(() => {
     const url = new URL(
-      "/src/data/compressed" +
+      "./data/compressed/" +
         `p${projectionParam.toLowerCase()}` +
         `_d${datasetParam.toLowerCase()}` +
         `_m${metricParam.toLowerCase()}` +
@@ -65,7 +65,7 @@ const Controls = ({
       import.meta.url
     );
 
-    fetch(url)
+    fetch(url.href)
       .then(() => {
         updateMatrix({
           k: kParam,
@@ -292,7 +292,7 @@ const PostprocessMatrix = ({
             width={"100%"}
             href={
               new URL(
-                "/src/data/compressed/" +
+                "./data/compressed/" +
                   `p${caseToShow.projection.toLowerCase()}` +
                   `_d${caseToShow.dataset.toLowerCase()}` +
                   `_m${caseToShow.metric.toLowerCase()}` +

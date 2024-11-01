@@ -24,8 +24,6 @@ function validateAndSetPostprocessCase(
     import.meta.url
   );
 
-  // import(`/src/data/compressed/p${projection.toLowerCase()}_d${dataset.toLowerCase()}_m${metric.toLowerCase()}_k${k}.jpg`).then((response) => callbackOnSuccess(params));
-
   fetch(fURL.href)
     .then((response) => {
       if (response.ok) {
@@ -107,14 +105,14 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         d3.sort(
           data,
           (d) => d.dataset,
-          (d) => d.metric,
+          (d) => d.metric === "all" ? "zAll" : d.metric, // force "all" to be sorted last
           (d) => d.projection
         ),
         (d) => d.dataset,
         (d) => d.metric,
         (d) => d.projection
       );
-      const uniqueMetricsInData = ((d) => [...new Set(d.map((row) => row.metric))].length)(data);
+      const uniqueMetricsInData = [...new Set(data.map((row) => row.metric))].length;
 
       const headerSvg = d3.select(headerRef.current!);
       headerSvg.selectChildren("*").remove();
@@ -275,7 +273,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .attr("width", cellSize);
 
       d3.selectAll(".per-dataset")
-        .selectChild(".per-metric")
+        .selectChild(":last-child.per-metric")
         .call((selection) => {
           selection
             .append("rect")

@@ -9,10 +9,10 @@ type Scale = (n: number) => ReturnType<d3.ScaleDiverging<number>>;
 function clip(x: number, min: number, max: number): number {
   return x <= min ? min : x >= max ? max : x;
 }
-function lowerIsBetterScale(interpolator = DEFAULT_INTERPOLATOR): Scale {
+export function lowerIsBetterScale(interpolator = DEFAULT_INTERPOLATOR): Scale {
   return (x: number) => d3.scaleDiverging([1, 0, -1], interpolator)(clip(x, -3, 3));
 }
-function higherIsBetterScale(interpolator = DEFAULT_INTERPOLATOR): Scale {
+export function higherIsBetterScale(interpolator = DEFAULT_INTERPOLATOR): Scale {
   return (x: number) => d3.scaleDiverging([-1, 0, 1], interpolator)(clip(x, -3, 3));
 }
 export const PER_METRIC_SCALES: { [k: string]: Scale } = {

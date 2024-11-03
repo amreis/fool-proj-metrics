@@ -5,6 +5,7 @@ import { METRIC_NAMES, NICE_METRIC_NAMES, NICE_PROJ_NAMES } from "./common/names
 import { PER_METRIC_SCALES } from "./common/scale";
 import { FoolerDataRow, Metrics, TargetMetric, VisParams } from "./common/schema";
 import csvData from "./data/per_epoch_for_d3.csv?url";
+import Legend from "./legend";
 import "./metricmatrix.css";
 
 const width = 1150;
@@ -361,6 +362,9 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
             onChange={() => setShowDiffs(false)}
           />
           Absolutes
+        </div>
+        <div>
+          <Legend showDiffs={showDiffs} />
         </div>
       </aside>
       <div id="matrix-container">

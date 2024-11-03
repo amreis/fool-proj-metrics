@@ -1,1 +1,1 @@
-{"root":["./src/App.tsx","./src/MetricMatrix.tsx","./src/PostprocessMatrix.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/common/names.ts","./src/common/scale.ts","./src/common/schema.ts"],"version":"5.6.3"}
+{"root":["./src/App.tsx","./src/MetricMatrix.tsx","./src/PostprocessMatrix.tsx","./src/legend.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/common/names.ts","./src/common/scale.ts","./src/common/schema.ts"],"version":"5.6.3"}

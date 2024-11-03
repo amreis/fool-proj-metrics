@@ -4,10 +4,10 @@ import * as d3 from "d3";
 import { higherIsBetterScale } from "./common/scale";
 
 interface Props {
-    showDiffs: boolean;
+  showDiffs: boolean;
 }
 
-const Legend = ({showDiffs} : Props) => {
+const Legend = ({ showDiffs }: Props) => {
   const ref = useRef<SVGSVGElement>(null);
   const [delta, setDelta] = useState(0.0);
 
@@ -21,26 +21,28 @@ const Legend = ({showDiffs} : Props) => {
       .attr("x", 0)
       .attr("y", 0)
       .attr("fill", higherIsBetterScale()(delta));
-    svg.append("text")
-        .attr("fill", "#000000")
-        .text("(reference value)")
-        .attr("x", 150)
-        .attr("y", 180)
-        .attr("text-anchor", "middle")
-        .style("font", "24px sans-serif")
-    svg.append("text")
-        .attr("fill", "#000000")
-        .text(showDiffs ? "diff w.r.t. reference" : "absolute metric val.")
-        .attr("x", 150)
-        .attr("y", 150)
-        .attr("text-anchor", "middle")
-        .style("font", "24px sans-serif")
-        .style("font-weight", "bold")
+    svg
+      .append("text")
+      .attr("fill", "#000000")
+      .text("(reference value)")
+      .attr("x", 150)
+      .attr("y", 180)
+      .attr("text-anchor", "middle")
+      .style("font", "24px sans-serif");
+    svg
+      .append("text")
+      .attr("fill", "#000000")
+      .text(showDiffs ? "diff w.r.t. reference" : "absolute metric val.")
+      .attr("x", 150)
+      .attr("y", 150)
+      .attr("text-anchor", "middle")
+      .style("font", "24px sans-serif")
+      .style("font-weight", "bold");
   }, [delta, showDiffs]);
 
   return (
     <div style={{ display: "grid", marginTop: "30vh", marginLeft: "1vw" }}>
-      <i style={{margin: "5px"}}>Legend: </i>
+      <i style={{ margin: "5px" }}>Legend: </i>
       <div style={{ display: "inline-flex" }}>
         <svg
           ref={ref}

@@ -106,7 +106,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         d3.sort(
           data,
           (d) => d.dataset,
-          (d) => d.metric === "all" ? "zAll" : d.metric, // force "all" to be sorted last
+          (d) => (d.metric === "all" ? "zAll" : d.metric), // force "all" to be sorted last
           (d) => d.projection
         ),
         (d) => d.dataset,

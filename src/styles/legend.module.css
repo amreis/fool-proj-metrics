@@ -1,0 +1,32 @@
+.container {
+  display: grid;
+  margin-top: 30vh;
+  margin-left: 1vw;
+}
+
+.legendLabel {
+  margin: 5px;
+}
+
+.svgContainer {
+  display: inline-flex;
+}
+
+.graphics {
+  width: 50%;
+  height: auto;
+}
+
+.controls {
+  align-content: center;
+  display: grid;
+  width: 50%;
+}
+
+.range {
+  writing-mode: vertical-lr;
+  vertical-align: baseline;
+  rotate: 180deg;
+  -webkit-writing-mode: vertical-lr;
+  -ms-writing-mode: vertical-lr;
+}

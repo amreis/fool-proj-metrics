@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
 import { higherIsBetterScale } from "./common/scale";
+import style from "./styles/legend.module.css";
 
 interface Props {
   showDiffs: boolean;
@@ -41,23 +42,21 @@ const Legend = ({ showDiffs }: Props) => {
   }, [delta, showDiffs]);
 
   return (
-    <div style={{ display: "grid", marginTop: "30vh", marginLeft: "1vw" }}>
-      <i style={{ margin: "5px" }}>Legend: </i>
-      <div style={{ display: "inline-flex" }}>
-        <svg
-          ref={ref}
-          viewBox="0 0 300 300"
-          style={{
-            width: "50%",
-            height: "auto",
-          }}
-        />
-        <div style={{ alignContent: "center", display: "grid", width: "50%" }}>
+    <div className={style.container}>
+      <i className={style.legendLabel}>
+        Legend:
+        <br />
+        (assumes higher values are better)
+      </i>
+      <div className={style.svgContainer}>
+        <svg ref={ref} viewBox="0 0 300 300" className={style.graphics} />
+        <div className={style.controls}>
           <label htmlFor="delta-val">
             Diff = {(delta >= 0 ? "+" : "-") + Math.abs(delta).toFixed(2)}
           </label>
           <input
             type="range"
+            className={style.range}
             min={-5}
             max={5}
             step={0.2}
@@ -66,7 +65,6 @@ const Legend = ({ showDiffs }: Props) => {
               setDelta(e.target.valueAsNumber);
             }}
             value={delta}
-            style={{ writingMode: "vertical-lr", verticalAlign: "baseline" }}
           />
         </div>
       </div>

@@ -1,79 +1,72 @@
-div#main-container {
+.mainContainer {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-div#matrix-container {
+.matrixContainer {
   width: 80%;
   order: 1;
   height: 90vh;
   overflow-y: scroll;
 }
 
-aside {
+.aside {
+  display: grid;
   width: 20%;
   order: 2;
   height: fit-content;
   /* position: sticky; */
   top: 0px;
-  * {
-    font: 15px monospace;
-  }
 }
 
-.metric-matrix-header {
+.metricMatrixHeader {
   position: sticky;
   top: 0px;
   left: 0px;
   font: 12px sans-serif;
 }
 
-.metric-matrix-header > rect.bg {
+.headerBackgroundRect {
   fill: white;
   fill-opacity: 0.9;
   height: 100%;
 }
 
-g.per-dataset > text {
+.datasetName {
   font-size: large;
   font-weight: bold;
   text-anchor: start;
 }
 
-rect.metric-callout {
+.metricCallout {
   stroke: #000;
   stroke-width: 5;
   fill: transparent;
   pointer-events: none;
 }
 
-.metric-ref-val,
-.metric-delta-val {
+.metricRefVal,
+.metricDeltaVal {
   pointer-events: none;
 }
 
 @media only screen and (max-width: 600px) {
-  div#main-container {
+  .mainContainer {
     flex-direction: column;
     height: 90vh;
   }
 
-  aside {
+  .aside {
     order: 1;
     width: 100%;
     flex: 0 1 0%;
     /* top: 0px; */
   }
 
-  div#matrix-container {
+  .matrixContainer {
     order: 2;
     width: 100%;
     flex: 1 1 50%;
   }
-}
-
-rect.active {
-  stroke: red;
-  stroke-width: 3px;
 }

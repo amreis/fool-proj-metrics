@@ -6,7 +6,7 @@ import { PER_METRIC_SCALES } from "./common/scale";
 import { FoolerDataRow, Metrics, TargetMetric, VisParams } from "./common/schema";
 import csvData from "./data/per_epoch_for_d3.csv?url";
 import Legend from "./legend";
-import "./metricmatrix.css";
+import style from "./metricmatrix.module.css";
 
 const width = 1150;
 const cellSize = 56;
@@ -121,11 +121,11 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .attr("width", width)
         .attr("height", headerHeight)
         .attr("viewBox", [0, 0, width, headerHeight])
-        .classed("metric-matrix-header", true)
+        .classed(style.metricMatrixHeader, true)
         .style("margin-bottom", `-${cellSize / 2}px`);
       headerSvg
         .append("rect")
-        .classed("bg", true)
+        .classed(style.headerBackgroundRect, true)
         .attr("width", width - 121.0)
         .attr("transform", "translate(151.0, 0.0)");
       headerSvg
@@ -158,6 +158,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         );
       perDataset
         .append("text")
+        .classed(style.datasetName, true)
         .attr("x", -50)
         .attr("y", -5)
         .text(([key]) => key.toUpperCase());
@@ -226,7 +227,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
 
       perProj2
         .insert("text", "#first + *")
-        .classed("metric-delta-val", true)
+        .classed(style.metricDeltaVal, true)
         .attr("x", (_d, i) => 10 + i * (1.0 * cellSize))
         .attr("y", 35)
         .attr("fill", "#000")
@@ -238,7 +239,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         });
       perProj2
         .insert("text", "#first + *")
-        .classed("metric-ref-val", true)
+        .classed(style.metricRefVal, true)
         .data(([, data]) =>
           Object.entries(data.find((row) => row.epoch === -1)!).filter(([metricName]) =>
             (METRIC_NAMES as string[]).includes(metricName)
@@ -256,7 +257,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .attr("transform", "translate(-50.0, 50)");
 
       perMetric
-        .selectAll("rect.metric-callout")
+        .selectAll(`rect.${style.metricCallout}`)
         .data((d) => {
           if (d[0] === "all") {
             return [];
@@ -265,7 +266,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         })
         .enter()
         .append("rect")
-        .classed("metric-callout", true)
+        .classed(style.metricCallout, true)
         .attr("height", perMetricHeight)
         .attr("x", (d) => {
           return cellSize * (METRIC_NAMES as string[]).indexOf(d[0]) + 100.5;
@@ -278,7 +279,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .call((selection) => {
           selection
             .append("rect")
-            .classed("metric-callout", true)
+            .classed(style.metricCallout, true)
             .attr("height", perMetricHeight)
             .attr("x", cellSize * METRIC_NAMES.indexOf("continuity") + 100.5)
             .attr("y", 15)
@@ -287,7 +288,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .call((selection) => {
           selection
             .append("rect")
-            .classed("metric-callout", true)
+            .classed(style.metricCallout, true)
             .attr("height", perMetricHeight)
             .attr("x", cellSize * METRIC_NAMES.indexOf("trustworthiness") + 100.5)
             .attr("y", 15)
@@ -296,7 +297,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .call((selection) => {
           selection
             .append("rect")
-            .classed("metric-callout", true)
+            .classed(style.metricCallout, true)
             .attr("height", perMetricHeight)
             .attr("x", cellSize * METRIC_NAMES.indexOf("jaccard") + 100.5)
             .attr("y", 15)
@@ -305,7 +306,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .call((selection) => {
           selection
             .append("rect")
-            .classed("metric-callout", true)
+            .classed(style.metricCallout, true)
             .attr("height", perMetricHeight)
             .attr("x", cellSize * METRIC_NAMES.indexOf("neighborhood_hit") + 100.5)
             .attr("y", 15)
@@ -315,11 +316,10 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
   }, [kParam, setPostprocessCase, showDiffs]);
 
   return (
-    <div id="main-container">
+    <div id="main-container" className={style.mainContainer}>
       <aside
-        style={{
-          display: "grid",
-        }}
+      className={style.aside}
+
       >
         <div>
           <button
@@ -367,7 +367,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
           <Legend showDiffs={showDiffs} />
         </div>
       </aside>
-      <div id="matrix-container">
+      <div id="matrix-container" className={style.matrixContainer}>
         <svg id="header-svg" ref={headerRef} />
         <svg id="content-svg" ref={contentRef} />
       </div>

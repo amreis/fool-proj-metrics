@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import { useEffect, useRef, useState } from "react";
 
 import { higherIsBetterScale } from "./common/scale";
 import style from "./styles/legend.module.css";
@@ -24,21 +24,16 @@ const Legend = ({ showDiffs }: Props) => {
       .attr("fill", higherIsBetterScale()(delta));
     svg
       .append("text")
-      .attr("fill", "#000000")
       .text("(reference value)")
       .attr("x", 150)
       .attr("y", 180)
-      .attr("text-anchor", "middle")
-      .style("font", "24px sans-serif");
+      .classed(style.textRefValue, true);
     svg
       .append("text")
-      .attr("fill", "#000000")
       .text(showDiffs ? "diff w.r.t. reference" : "absolute metric val.")
       .attr("x", 150)
       .attr("y", 150)
-      .attr("text-anchor", "middle")
-      .style("font", "24px sans-serif")
-      .style("font-weight", "bold");
+      .classed(style.textValue, true);
   }, [delta, showDiffs]);
 
   return (

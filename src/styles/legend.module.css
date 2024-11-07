@@ -30,3 +30,15 @@
   -webkit-writing-mode: vertical-lr;
   -ms-writing-mode: vertical-lr;
 }
+
+.textValue {
+  text-anchor: middle;
+  fill: black;
+  font: bold 24px sans-serif;
+}
+
+.textRefValue {
+  text-anchor: middle;
+  fill: black;
+  font: 24px sans-serif;
+}

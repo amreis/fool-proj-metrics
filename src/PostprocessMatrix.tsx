@@ -288,7 +288,7 @@ const PostprocessMatrix = ({
         <svg id="postprocmatrix" viewBox={`0, 0, ${svgWidth}, 400`} ref={ref}>
           <image
             x={0}
-            y={28}
+            y={0}
             width={"100%"}
             href={
               new URL(

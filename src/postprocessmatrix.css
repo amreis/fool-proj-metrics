@@ -19,8 +19,16 @@ div#postprocmatrix-container {
 }
 
 svg#postprocmatrix {
-  height: fit-content;
   width: fit-content;
+}
+
+div#key-postproc {
+  display: flex;
+  flex-direction: row;
+  > * {
+    position: relative;
+    width: 20%;
+  }
 }
 
 @media only screen and (max-width: 600px) {

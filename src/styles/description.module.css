@@ -1,5 +1,6 @@
 .descriptionContainer {
   margin-left: 5vw;
+  margin-bottom: 5vh;
 }
 
 .tutorialContainer {
@@ -15,6 +16,8 @@
 
 .miniVisual {
   grid-column: 2;
-  width: 100%;
-  height: 100%;
+  width: min(80%, 30vw);
+  margin: auto;
+  display: block;
+  align-self: center;
 }

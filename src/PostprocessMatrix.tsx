@@ -6,6 +6,7 @@ import { FoolerDataRow, PostprocessDataRow, TargetMetric, VisParams } from "./co
 import csvFooler from "./data/per_epoch_for_d3.csv?url";
 import csvPostprocess from "./data/postprocess_for_d3.csv?url";
 import "./postprocessmatrix.css";
+import { MathJax, MathJaxContext } from "better-react-mathjax";
 
 const K_VALS = [1, 7, 21, 51];
 const TARGET_METRICS: TargetMetric[] = (
@@ -285,7 +286,7 @@ const PostprocessMatrix = ({
   return (
     <div id="postprocess-part">
       <div id="postprocmatrix-container">
-        <svg id="postprocmatrix" viewBox={`0, 0, ${svgWidth}, 400`} ref={ref}>
+        <svg id="postprocmatrix" viewBox={`0, 0, ${svgWidth}, 320`} ref={ref}>
           <image
             x={0}
             y={0}
@@ -303,6 +304,15 @@ const PostprocessMatrix = ({
             }
           />
         </svg>
+        <div id="key-postproc">
+          <MathJaxContext>
+            <MathJax>{"$$\\mathcal{P}$$"}</MathJax>
+            <MathJax>{"$$\\mathbf{\\hat{Y}}$$"}</MathJax>
+            <MathJax>{"$$G_\\text{ProjNN}$$"}</MathJax>
+            <MathJax>{"$$G_\\text{DataNN}$$"}</MathJax>
+            <MathJax>{"$$G_\\triangle$$"}</MathJax>
+          </MathJaxContext>
+        </div>
       </div>
       <Controls updateMatrix={setPostprocessCase} params={caseToShow} />
     </div>

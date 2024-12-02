@@ -27,7 +27,7 @@ function Description() {
       for (let i = 0; i < 4; ++i) {
         g.append("text")
           .text(`Proj${i + 1}`)
-          .attr("x", -2 *CELL_SIZE)
+          .attr("x", -2 * CELL_SIZE)
           .attr("y", CELL_SIZE * i + 0.8 * CELL_SIZE)
           .attr("font-size", 10);
 
@@ -101,17 +101,17 @@ function Description() {
         <summary>Reading the visualizations below</summary>
         <div className={styles.tutorialContainer}>
           <div className={styles.explanationsContainer}>
+            <p>In our work, each experiment requires:</p>
+            <ul>
+              <li>a dataset</li>
+              <li>a reference projection</li>
+              <li>a target metric to be fooled</li>
+              <li>
+                the hyperparameters for that metric (in our study, all metrics require only a K
+                parameter)
+              </li>
+            </ul>
             <p>
-              In our work, each experiment requires:
-              <ul>
-                <li>a dataset</li>
-                <li>a reference projection</li>
-                <li>a target metric to be fooled</li>
-                <li>
-                  the hyperparameters for that metric (in our study, all metrics require only a K
-                  parameter)
-                </li>
-              </ul>
               Below, you see one row of{" "}
               <span>
                 <svg id="tutorial-rect-svg" height="1em" width="3em" viewBox="0 0 94 30">
@@ -130,15 +130,16 @@ function Description() {
               metrics is possible with a toggle on the right side of the web page.
               <br />
               Colors encode quality, such that blue shades are always gains and red shades are
-              always losses in quality.
+              always losses in quality; metric values are shown <em>without any transformation</em>.
             </p>
             <p>
-              Clicking on a given row visualizes &mdash; see bottom of the page &mdash; all projections produced in that specific
-              experiment, together with the difference in value of the target quality metric for
-              that experiment with respect to the reference projection.
+              Clicking on a given row visualizes &mdash; see bottom of the page &mdash; all
+              projections produced in that specific experiment, together with the difference in
+              value of the target quality metric for that experiment with respect to the reference
+              projection.
             </p>
           </div>
-          <svg className={styles.miniVisual} viewBox="0 0 300 300" ref={ref}></svg>
+            <svg className={styles.miniVisual} viewBox="0 0 300 300" ref={ref}></svg>
         </div>
       </details>
     </div>

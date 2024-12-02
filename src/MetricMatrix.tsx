@@ -328,6 +328,7 @@ const MetricMatrix = ({ setPostprocessCase }: Props) => {
                 backgroundColor: "#FFFFFF",
               });
             }}
+            style={{visibility: "hidden"}}
           >
             Save as PNG
           </button>

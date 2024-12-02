@@ -27,9 +27,10 @@ function Description() {
       for (let i = 0; i < 4; ++i) {
         g.append("text")
           .text(`Proj${i + 1}`)
-          .attr("x", -2 * CELL_SIZE)
+          .attr("x", -1)
           .attr("y", CELL_SIZE * i + 0.8 * CELL_SIZE)
-          .attr("font-size", 10);
+          .attr("font-size", 10)
+          .attr("text-anchor", "end");
 
         for (let j = 0; j < 17; ++j) {
           g.append("rect")
@@ -49,8 +50,9 @@ function Description() {
       miniRectsG
         .append("text")
         .text(`Target ${i + 1}`)
-        .attr("text-anchor", "center")
-        .attr("transform", `translate(-30.0, ${3.5 * CELL_SIZE}) rotate(270)`)
+        .attr("text-anchor", "middle")
+        .attr("x", -2*CELL_SIZE)
+        .attr("transform", `translate(-30.0, 0) rotate(270)`)
         .attr("font-size", 10);
       miniRectsG
         .append("rect")

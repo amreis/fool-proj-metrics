@@ -1,3 +1,4 @@
+import { MathJax, MathJaxContext } from "better-react-mathjax";
 import * as d3 from "d3";
 import { useEffect, useRef, useState } from "react";
 import { NICE_METRIC_NAMES, NICE_PROJ_NAMES } from "./common/names.js";
@@ -6,30 +7,22 @@ import { FoolerDataRow, PostprocessDataRow, TargetMetric, VisParams } from "./co
 import csvFooler from "./data/per_epoch_for_d3.csv?url";
 import csvPostprocess from "./data/postprocess_for_d3.csv?url";
 import "./postprocessmatrix.css";
-import { MathJax, MathJaxContext } from "better-react-mathjax";
 
 const K_VALS = [1, 7, 21, 51];
 const TARGET_METRICS: TargetMetric[] = (
   ["trustworthiness", "continuity", "jaccard", "neighborhood_hit", "all"] as TargetMetric[]
 ).sort();
-// type TARGET_METRICS =
-//   | "all"
-//   | "continuity"
-//   | "jaccard"
-//   | "neighborhood_hit"
-//   | "trustworthiness";
 
 const PROJECTIONS = ["tsne", "umap", "mds", "isomap"].sort();
 const DATASETS = ["mnist", "fashionmnist", "spambase", "har", "reuters", "usps"].sort();
 const POSTPROCESS_IDS = ["projnn", "truenn", "delaunay"];
 
-const Controls = ({
-  updateMatrix,
-  params,
-}: {
+interface ControlsProps {
   updateMatrix: (p: VisParams) => void;
   params: VisParams;
-}) => {
+}
+
+const Controls = ({ updateMatrix, params }: ControlsProps) => {
   const {
     k: kParamInit,
     metric: metricParamInit,
@@ -161,13 +154,12 @@ const Controls = ({
   );
 };
 
-const PostprocessMatrix = ({
-  caseToShow,
-  setPostprocessCase,
-}: {
+interface Props {
   caseToShow: VisParams;
   setPostprocessCase: (p: VisParams) => void;
-}) => {
+}
+
+const PostprocessMatrix = ({ caseToShow, setPostprocessCase }: Props) => {
   const [postprocessData, setPostprocessData] = useState<Array<PostprocessDataRow> | null>(null);
   const [foolerData, setFoolerData] = useState<Array<FoolerDataRow> | null>(null);
   const ref = useRef<SVGSVGElement>(null);
@@ -283,6 +275,7 @@ const PostprocessMatrix = ({
       processRow(row, ix + 1);
     });
   }, [postprocessData, foolerData, caseToShow]);
+
   return (
     <div id="postprocess-part">
       <div id="postprocmatrix-container">

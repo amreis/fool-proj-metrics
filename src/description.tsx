@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
-import styles from "./styles/description.module.css";
 import * as d3 from "d3";
+import { useEffect, useRef } from "react";
 import { higherIsBetterScale } from "./common/scale";
+import styles from "./styles/description.module.css";
 
 function Description() {
   const ref = useRef<SVGSVGElement>(null);
@@ -139,7 +139,7 @@ function Description() {
               projection.
             </p>
           </div>
-            <svg className={styles.miniVisual} viewBox="0 0 300 300" ref={ref}></svg>
+          <svg className={styles.miniVisual} viewBox="0 0 300 300" ref={ref}></svg>
         </div>
       </details>
     </div>

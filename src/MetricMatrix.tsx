@@ -93,7 +93,10 @@ function getLearnedProjMetrics(arr: FoolerDataRow[]) {
 
 const headerHeight = 2.5 * cellSize;
 
-const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParams) => void }) => {
+interface Props {
+  setPostprocessCase: (p: VisParams) => void;
+}
+const MetricMatrix = ({ setPostprocessCase }: Props) => {
   const headerRef = useRef<SVGSVGElement>(null);
   const contentRef = useRef<SVGSVGElement>(null);
   const [kParam, setKParam] = useState(51);
@@ -223,7 +226,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
           validateAndSetPostprocessCase(findParamsOfClickedRect(this), setPostprocessCase);
         })
         .append("title")
-        .text((d, _i) => d[0][0]);
+        .text((d) => d[0][0]);
 
       perProj2
         .insert("text", "#first + *")
@@ -233,7 +236,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .attr("fill", "#000")
         .style("font-weight", "bold")
         .style("text-align", "center")
-        .text(([[, diff], [, abs]], _i) => {
+        .text(([[, diff], [, abs]]) => {
           const val = showDiffs ? diff : abs;
           return (showDiffs ? (val >= 0 ? "+" : "-") : "") + Math.abs(val + 0.0001).toFixed(3);
         });
@@ -248,7 +251,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
         .attr("x", (_d, i) => 10 + i * (1.0 * cellSize))
         .attr("y", 50)
         .attr("fill", "#000")
-        .text((d, _i) => `(${(+d[1]).toFixed(3)})`);
+        .text((d) => `(${(+d[1]).toFixed(3)})`);
       perProj
         .selectAll()
         .data(([proj]) => [NICE_PROJ_NAMES[proj]])
@@ -317,10 +320,7 @@ const MetricMatrix = ({ setPostprocessCase }: { setPostprocessCase: (p: VisParam
 
   return (
     <div id="main-container" className={style.mainContainer}>
-      <aside
-      className={style.aside}
-
-      >
+      <aside className={style.aside}>
         <div>
           <button
             onClick={() => {

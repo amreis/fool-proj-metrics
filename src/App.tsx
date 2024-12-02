@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import PostprocessMatrix from "./PostprocessMatrix.js";
 import MetricMatrix from "./MetricMatrix.js";
+import PostprocessMatrix from "./PostprocessMatrix.js";
 import { TargetMetric, VisParams } from "./common/schema.js";
 import Description from "./description.tsx";
 

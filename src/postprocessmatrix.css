@@ -19,7 +19,7 @@ div#postprocmatrix-container {
 }
 
 svg#postprocmatrix {
-  width: fit-content;
+  width: auto;
 }
 
 div#key-postproc {

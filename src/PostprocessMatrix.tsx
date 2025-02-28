@@ -301,9 +301,9 @@ const PostprocessMatrix = ({ caseToShow, setPostprocessCase }: Props) => {
           <MathJaxContext>
             <MathJax>{"$$\\mathcal{P}$$"}</MathJax>
             <MathJax>{"$$\\mathbf{\\hat{Y}}$$"}</MathJax>
+            <MathJax>{"$$G_\\triangle$$"}</MathJax>
             <MathJax>{"$$G_\\text{ProjNN}$$"}</MathJax>
             <MathJax>{"$$G_\\text{DataNN}$$"}</MathJax>
-            <MathJax>{"$$G_\\triangle$$"}</MathJax>
           </MathJaxContext>
         </div>
       </div>
